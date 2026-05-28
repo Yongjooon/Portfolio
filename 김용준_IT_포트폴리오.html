@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김용준 기술 포트폴리오</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --text: #243041;
+      --muted: #64748b;
+      --line: #d7e0ea;
+      --soft: #f6f8fb;
+      --paper: #ffffff;
+      --night: #101418;
+      --teal: #0f766e;
+      --blue: #2563eb;
+      --rose: #be123c;
+      --amber: #b45309;
+      --green: #15803d;
+      --violet: #6d28d9;
+      --shadow: 0 22px 64px rgba(16, 24, 40, 0.14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: #0d1117;
+      color: var(--ink);
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .deck-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 50;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 24px;
+      color: #f8fafc;
+      background: rgba(13, 17, 23, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: #111315;
+      font-size: 13px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-links a {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border-radius: 6px;
+      color: #cbd5df;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .nav-actions .nav-button,
+    .pdf-button {
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .nav-actions .nav-button {
+      width: 34px;
+      flex: 0 0 34px;
+      font-size: 17px;
+    }
+
+    .pdf-button {
+      width: 86px;
+      flex: 0 0 86px;
+      padding: 0 10px;
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 32px;
+    }
+
+    .nav-actions .nav-button:hover,
+    .pdf-button:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .counter {
+      min-width: 68px;
+      color: #d8e1ea;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: #6b7280 #111315;
+    }
+
+    .slide {
+      position: relative;
+      flex: 0 0 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      padding: 76px 58px 36px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .slide::after {
+      content: attr(data-page);
+      position: absolute;
+      right: 28px;
+      bottom: 20px;
+      color: #9aa6b2;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .slide.band {
+      background: var(--soft);
+    }
+
+    .slide.dark {
+      background: linear-gradient(135deg, #101418 0%, #162022 58%, #101418 100%);
+      color: #fff;
+    }
+
+    .slide.dark .kicker,
+    .slide.dark .muted,
+    .slide.dark .body-copy,
+    .slide.dark .metric span,
+    .slide.dark .caption {
+      color: #c9d2dc;
+    }
+
+    .slide.dark .panel {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .slide.dark .tag {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #f8fafc;
+    }
+
+    .slide-inner {
+      width: min(1280px, 100%);
+      height: 100%;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+      align-content: stretch;
+    }
+
+    .center {
+      align-content: center;
+    }
+
+    .kicker {
+      color: var(--teal);
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 1040px;
+      font-size: 66px;
+      line-height: 1.02;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 38px;
+      line-height: 1.12;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .lead {
+      max-width: 920px;
+      margin-top: 24px;
+      color: #334155;
+      font-size: 20px;
+      line-height: 1.62;
+      font-weight: 600;
+    }
+
+    .body-copy {
+      color: #46515c;
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+      gap: 34px;
+      align-items: center;
+      min-height: 0;
+    }
+
+    .row.wide-left {
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.55fr);
+    }
+
+    .row.equal {
+      grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+    }
+
+    .row.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 18px;
+      box-shadow: none;
+      min-width: 0;
+    }
+
+    .panel.tight {
+      padding: 18px;
+    }
+
+    .hero-photo {
+      height: min(68vh, 620px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #e5ebf0;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 11px;
+      border-radius: 999px;
+      border: 1px solid #cfd8e3;
+      color: #34404b;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tag.teal {
+      color: var(--teal);
+      border-color: rgba(15, 118, 110, 0.28);
+      background: rgba(15, 118, 110, 0.07);
+    }
+
+    .tag.rose {
+      color: var(--rose);
+      border-color: rgba(190, 18, 60, 0.25);
+      background: rgba(190, 18, 60, 0.06);
+    }
+
+    .tag.blue {
+      color: var(--blue);
+      border-color: rgba(37, 99, 235, 0.25);
+      background: rgba(37, 99, 235, 0.07);
+    }
+
+    .tag.amber {
+      color: var(--amber);
+      border-color: rgba(180, 83, 9, 0.26);
+      background: rgba(180, 83, 9, 0.07);
+    }
+
+    .tag.green {
+      color: var(--green);
+      border-color: rgba(21, 128, 61, 0.24);
+      background: rgba(21, 128, 61, 0.07);
+    }
+
+    .slide-title {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 8px;
+    }
+
+    .slide-title p {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    .project-no {
+      color: #9ba6b1;
+      font-size: 15px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .star-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .star-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .star-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+      min-height: 172px;
+    }
+
+    .star-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin-bottom: 12px;
+      padding: 0 8px;
+      border-radius: 5px;
+      background: #111315;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .star-box h3 {
+      margin-bottom: 10px;
+    }
+
+    .star-box p,
+    .star-box li {
+      color: #45515d;
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 18px;
+      color: #34404b;
+      font-size: 14px;
+      line-height: 1.48;
+      font-weight: 650;
+    }
+
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .list.compact li {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .list.dense {
+      gap: 7px;
+    }
+
+    .list.dense li {
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 16px;
+      min-height: 112px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 950;
+      color: var(--ink);
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+      font-weight: 800;
+    }
+
+    .image-frame {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      overflow: hidden;
+      min-height: 0;
+      box-shadow: var(--shadow);
+    }
+
+    .image-frame.plain {
+      box-shadow: none;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      max-height: 62vh;
+      object-fit: contain;
+      background: #eef2f6;
+    }
+
+    .image-frame.cover img {
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .image-placeholder {
+      min-height: 190px;
+      border: 1px dashed #9fb0c2;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(37, 99, 235, 0.06)),
+        repeating-linear-gradient(135deg, rgba(15, 23, 42, 0.04) 0 10px, transparent 10px 20px);
+      padding: 22px;
+      display: grid;
+      align-content: center;
+      gap: 10px;
+      color: #243041;
+    }
+
+    .image-placeholder.large {
+      min-height: 260px;
+    }
+
+    .image-placeholder .slot-label,
+    .slot-card .slot-label {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 24px;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 5px;
+      background: #111827;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .image-placeholder strong {
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .image-placeholder p {
+      color: #4b5867;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .slot-card {
+      min-height: 92px;
+      border: 1px dashed #a6b5c5;
+      border-radius: var(--radius);
+      background: #f8fafc;
+      padding: 12px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+
+    .slot-card strong {
+      font-size: 13px;
+      line-height: 1.3;
+      font-weight: 950;
+    }
+
+    .slot-card p {
+      color: #52606f;
+      font-size: 11px;
+      line-height: 1.38;
+      font-weight: 700;
+    }
+
+    .caption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      max-width: calc(100% - 24px);
+      border-radius: 6px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #4a5561;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .diagram {
+      display: grid;
+      gap: 10px;
+    }
+
+    .diagram-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .node {
+      min-height: 96px;
+      border: 1px solid #cfd8e3;
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .node strong {
+      font-size: 16px;
+      line-height: 1.22;
+      font-weight: 950;
+    }
+
+    .node span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.42;
+      font-weight: 750;
+    }
+
+    .node.dark-node {
+      background: #111315;
+      color: #fff;
+      border-color: #111315;
+    }
+
+    .node.dark-node span {
+      color: #c8d0d8;
+    }
+
+    .split-line {
+      height: 1px;
+      background: var(--line);
+      margin: 14px 0;
+    }
+
+    .logo-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo-strip .panel {
+      height: 136px;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-strip img {
+      max-height: 88px;
+      object-fit: contain;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .time-item {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .time-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .time {
+      color: var(--teal);
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .time-body strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .time-body span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .project-index {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .index-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 18px;
+      min-height: 130px;
+    }
+
+    .index-item strong {
+      display: block;
+      font-size: 20px;
+      font-weight: 950;
+      margin-bottom: 8px;
+    }
+
+    .index-item span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .footnote {
+      color: #76828f;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .detail-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+    }
+
+    .detail-card strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .detail-card p {
+      color: #4b5867;
+      font-size: 13px;
+      line-height: 1.48;
+      font-weight: 650;
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #eef3f7;
+      color: #15202b;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+      font-weight: 800;
+    }
+
+    @media print {
+      @page {
+        size: 13.333in 7.5in;
+        margin: 0;
+      }
+
+      html,
+      body {
+        width: 13.333in;
+        height: auto;
+        background: #fff;
+        overflow: visible;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .deck-nav {
+        display: none;
+      }
+
+      .deck {
+        display: block;
+        width: 13.333in;
+        height: auto;
+        overflow: visible;
+      }
+
+      .slide {
+        width: 13.333in;
+        height: 7.5in;
+        page-break-after: always;
+        break-after: page;
+        padding: 0.52in 0.62in 0.38in;
+      }
+
+      .slide:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      .slide-inner {
+        width: 100%;
+      }
+
+      .slide::after {
+        right: 0.28in;
+        bottom: 0.18in;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        display: block;
+        height: auto;
+        overflow: visible;
+      }
+
+      .slide {
+        min-height: 100vh;
+        height: auto;
+        padding: 84px 24px 46px;
+      }
+
+      .row,
+      .row.wide-left,
+      .row.equal,
+      .row.three,
+      .star-grid,
+      .star-grid.two,
+      .metric-grid,
+      .project-index,
+      .diagram-row,
+      .logo-strip,
+      .slot-grid,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-photo {
+        height: 520px;
+      }
+
+      .deck-nav {
+        overflow-x: auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      h3 {
+        font-size: 21px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .deck-nav {
+        padding: 0 10px;
+        gap: 8px;
+      }
+
+      .brand {
+        display: none;
+      }
+
+      .nav-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .counter {
+        min-width: 58px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+
+      .slide {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="deck-nav">
+    <a class="brand" href="#cover" aria-label="첫 슬라이드로 이동">
+      <span class="brand-mark">YJ</span>
+      <span>김용준 Technical Portfolio</span>
+    </a>
+    <nav class="nav-links" aria-label="프로젝트 슬라이드 바로가기">
+      <a href="#profile">소개</a>
+      <a href="#bebig-1">BeBig</a>
+      <a href="#gbcamera-1">GBCamera</a>
+      <a href="#newstagram-1">Newstagram</a>
+      <a href="#a601-1">A601</a>
+      <a href="#yongdon-1">용돈농장</a>
+      <a href="#autoqa-1">AutoQA</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="pdf-button" type="button" id="savePdf">PDF 저장</button>
+      <button class="nav-button" type="button" id="prevSlide" aria-label="이전 슬라이드">‹</button>
+      <span class="counter" id="slideCounter">1 / 28</span>
+      <button class="nav-button" type="button" id="nextSlide" aria-label="다음 슬라이드">›</button>
+    </div>
+  </header>
+
+  <main class="deck" id="deck">
+    <section class="slide dark" id="cover" data-page="00">
+      <div class="slide-inner center">
+        <div class="row wide-left">
+          <div>
+            <p class="kicker">Backend · Fullstack · AI Product</p>
+            <h1>문제를 서비스 흐름으로 번역하는 개발자, 김용준입니다.</h1>
+            <p class="lead">
+              금융 도메인 백엔드, AI QA 자동화, 실시간 WebRTC 게임, 현장 운영형 포토부스까지 경험했습니다.
+              이 포트폴리오는 프로젝트 자체보다 제가 맡은 구현 범위, 기술 의사결정, 문제 해결 과정을 중심으로 정리한 기술 포트폴리오입니다.
+            </p>
+            <div class="tags">
+              <span class="tag teal">Java · Spring Boot</span>
+              <span class="tag teal">JPA · QueryDSL · MyBatis</span>
+              <span class="tag rose">React · Vue · Electron</span>
+              <span class="tag blue">LLM Fine-tuning · Playwright</span>
+              <span class="tag amber">PM · Architecture · UX Flow</span>
+            </div>
+          </div>
+          <figure class="hero-photo">
+            <img src="김용준_증명.jpg" alt="김용준 증명사진" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="profile" data-page="01">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">Profile</p>
+            <h2>제 강점은 구현 범위와 제품 맥락을 함께 잡는 것입니다.</h2>
+          </div>
+          <span class="project-no">About</span>
+        </div>
+        <div class="row three">
+          <article class="panel">
+            <h3>Backend 중심 구현</h3>
+            <p class="body-copy">
+              단순 CRUD보다 상태, 이력, 권한, 외부 API 실패 가능성을 먼저 봅니다.
+              용돈농장에서는 금융 이벤트별 신용점수 이력, 대출 장부, 예적금 상태 전환, 외부 금융 API 연동을 도메인 흐름으로 설계했습니다.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>AI 제품화 경험</h3>
+            <p class="body-copy">
+              AI 호출 자체보다 AI 출력이 검증되고 실행되는 구조를 중요하게 봅니다.
+              AutoQA에서는 Playwright 실행 계약, validator, retry/fixer, guided JSON, DPO 데이터까지 연결했습니다.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>PM과 UX 흐름</h3>
+            <p class="body-copy">
+              PM으로 문제 정의, 기능 우선순위, API 계약, 화면 흐름을 정리했습니다.
+              사용자가 지금 무엇을 해야 하는지와 실패 시 어디서 회복할지를 화면에 드러내는 데 집중합니다.
+            </p>
+          </article>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><strong>6+</strong><span>대표 프로젝트</span></div>
+          <div class="metric"><strong>960h</strong><span>KB IT's Your Life 응용SW 교육</span></div>
+          <div class="metric"><strong>925h</strong><span>SSAFY 1학기 코딩 집중과정</span></div>
+          <div class="metric"><strong>IM3</strong><span>OPIc English</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="credentials" data-page="02">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">Education · Award · Experience</p>
+            <h2>교육과 수상 이력은 프로젝트 성과를 뒷받침합니다.</h2>
+          </div>
+          <span class="project-no">Evidence</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>교육</h3>
+            <div class="split-line"></div>
+            <div class="timeline">
+              <div class="time-item">
+                <div class="time">2017 - 2024</div>
+                <div class="time-body"><strong>인천대학교 임베디드시스템공학과</strong><span>공학사, 데이터구조·알고리즘·운영체제·DB·임베디드 기반</span></div>
+              </div>
+              <div class="time-item">
+                <div class="time">2024.05 - 2024.10</div>
+                <div class="time-body"><strong>KB IT's Your Life</strong><span>응용SW엔지니어링 960시간, BeBig 프로젝트 최우수상</span></div>
+              </div>
+              <div class="time-item">
+                <div class="time">2025.07 - 2026.06</div>
+                <div class="time-body"><strong>SSAFY 14기</strong><span>Java, Spring, Vue, AI, 프로젝트 기반 실전 개발</span></div>
+              </div>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>수상 · 자격 · 경험</h3>
+            <div class="split-line"></div>
+            <ul class="list">
+              <li>KB IT's Your Life 종합실무프로젝트 최우수상: BeBig</li>
+              <li>SSAFY 1학기 성적우수상, 1학기 프로젝트 우수상: Newstagram</li>
+              <li>SSAFY 공통프로젝트 우수상: A601, 자율프로젝트 우수상</li>
+              <li>Google Analytics Certification, 정보처리기사 필기 합격, OPIc IM3</li>
+              <li>VQA 프로젝트: Qwen2.5-VL-3B 기반 한국어 VQA 성능 0.76 → 0.85+ 개선</li>
+              <li>양천구청 여름방학 대학생 행정인턴, INU 학습멘토링 봉사</li>
+            </ul>
+            <p class="footnote" style="margin-top: 16px;">상장과 수료증 이미지는 포함하지 않고, 확인된 내용만 텍스트로 정리했습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="project-map" data-page="03">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">Technical Scope</p>
+            <h2>프로젝트별로 실제 담당한 구현 범위와 기술 의사결정을 먼저 볼 수 있게 구성했습니다.</h2>
+          </div>
+          <span class="project-no">Scope Map</span>
+        </div>
+        <div class="project-index">
+          <a class="index-item" href="#bebig-1"><strong>01 BeBig</strong><span>PM/Frontend · CODEF 계좌 연결 UX, 자산/소비 분석 화면, 미션/커뮤니티 상태 관리</span></a>
+          <a class="index-item" href="#gbcamera-1"><strong>02 GBCamera</strong><span>Solo Fullstack · React/Electron 촬영 앱, Canvas 합성, Spring API, 프린터/QR 운영 흐름</span></a>
+          <a class="index-item" href="#newstagram-1"><strong>03 Newstagram</strong><span>PM/Fullstack · RSS 수집, 임베딩, PgVector 검색, Kafka 로그, Vue 화면/API 연동</span></a>
+          <a class="index-item" href="#a601-1"><strong>04 A601</strong><span>PM/Frontend · LiveKit WebRTC, STOMP 이벤트, Zustand stage 제어, 실시간 게임 UX</span></a>
+          <a class="index-item" href="#yongdon-1"><strong>05 용돈농장</strong><span>Backend · DB 설계, QueryDSL, SSAFY 금융 API, 인증/인가, 금융 이벤트 이력화</span></a>
+          <a class="index-item" href="#autoqa-1"><strong>06 AutoQA</strong><span>PM/AI · SQS/Redis/S3 파이프라인, QA suite contract, Qwen3-8B SFT/DPO</span></a>
+        </div>
+        <div class="detail-grid">
+          <article class="detail-card"><strong>상태와 이력 설계</strong><p>금융 이벤트, 게임 페이즈, QA 파이프라인처럼 시간이 흐르며 변하는 도메인을 상태값과 이력으로 모델링했습니다.</p></article>
+          <article class="detail-card"><strong>외부 시스템 연동</strong><p>CODEF, SSAFY 금융 API, RSS/AI API, LiveKit, SQS, S3처럼 실패 가능성이 있는 경계를 분리하고 회복 흐름을 설계했습니다.</p></article>
+          <article class="detail-card"><strong>제품 흐름 구현</strong><p>단일 기능 구현에 그치지 않고 사용자가 입력, 처리 대기, 결과 확인, 실패 복구까지 이어지는 전체 화면/API 흐름을 맞췄습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="bebig-1" data-page="04">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">01 BeBig · 개요 / 역할</p>
+            <h2>실제 계좌 데이터를 행동 변화로 연결한 금융 자산관리 서비스</h2>
+          </div>
+          <span class="project-no">BeBig 1/3</span>
+        </div>
+        <div class="row wide-left">
+          <div>
+            <div class="star-grid two">
+              <article class="star-box">
+                <span class="star-label">개요</span>
+                <h3>금융 데이터를 이해 가능한 루틴으로 변환</h3>
+                <p>
+                  BeBig은 CODEF 기반 실제 계좌 데이터와 금융 공공데이터를 활용해 사용자의 자산, 소비 패턴, 금융 유형을 분석하고
+                  개인화 미션과 예적금 상품을 추천하는 서비스입니다.
+                </p>
+              </article>
+              <article class="star-box">
+                <span class="star-label">역할</span>
+                <h3>PM · Frontend · 데이터 사용 구조 설계</h3>
+                <p>
+                  PM으로 기능 흐름과 데이터 구조를 정리했고, Vue 3 기반 주요 화면을 구현했습니다.
+                  특히 계좌 연결, 거래 내역, 자산 분석, 미션, 커뮤니티, 마이페이지 UX를 담당했습니다.
+                </p>
+              </article>
+            </div>
+            <div class="tags">
+              <span class="tag rose">Vue 3</span>
+              <span class="tag rose">Pinia</span>
+              <span class="tag">Tailwind CSS</span>
+              <span class="tag">Chart.js</span>
+              <span class="tag amber">CODEF API</span>
+              <span class="tag blue">PM</span>
+            </div>
+            <div class="detail-grid">
+              <article class="detail-card"><strong>Frontend 구조</strong><p>라우터를 user/home/asset/mission/community/mypage로 나누고 화면별 API 모듈과 상태를 분리했습니다.</p></article>
+              <article class="detail-card"><strong>금융 UX</strong><p>계좌 연결, 거래내역, 소비 분석, 상품 추천, 미션 수행이 끊기지 않도록 데이터 흐름을 연결했습니다.</p></article>
+              <article class="detail-card"><strong>PM 운영</strong><p>Jira WBS, Notion 정책 문서, Git Flow, PR 리뷰 기준, Figma 화면 흐름을 정리했습니다.</p></article>
+            </div>
+          </div>
+          <div class="slot-grid">
+            <div class="slot-card"><span class="slot-label">우측 상단</span><strong>BeBig 홈 대시보드</strong><p>총자산, 계좌 요약, 미션 CTA가 함께 보이는 화면 후보</p></div>
+            <div class="slot-card"><span class="slot-label">우측 상단</span><strong>계좌 연결 단계</strong><p>은행 선택, CODEF 연동 로딩, 오류 안내 UX를 보여줄 화면 후보</p></div>
+            <div class="slot-card"><span class="slot-label">우측 하단</span><strong>자산/소비 분석 차트</strong><p>Chart.js 소비 그래프, 평균선, 자산 비율 바를 보여줄 화면 후보</p></div>
+            <div class="slot-card"><span class="slot-label">우측 하단</span><strong>미션/뱃지/커뮤니티</strong><p>반복 사용 동기를 설명할 수 있는 게임화 화면 후보</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="bebig-2" data-page="05">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">01 BeBig · 문제상황 / 목표</p>
+            <h2>제가 해결해야 한 문제는 금융 데이터를 사용자가 행동으로 이해하게 만드는 것이었습니다.</h2>
+          </div>
+          <span class="project-no">BeBig 2/3</span>
+        </div>
+        <div class="star-grid two">
+          <article class="star-box">
+            <span class="star-label">문제상황</span>
+            <h3>계좌·거래 데이터를 화면에 그대로 노출하면 사용자가 다음 행동을 알기 어렵다</h3>
+            <ul class="list compact">
+              <li>계좌와 거래 내역 API 응답을 화면에 그대로 뿌리면 사용자가 소비 패턴과 개선 행동을 해석해야 했습니다.</li>
+              <li>CODEF 계좌 연결은 민감한 금융 정보 입력과 긴 대기 시간이 있어 진행 상태 안내가 필요했습니다.</li>
+              <li>거래 내역은 데이터 양이 많아 무한 스크롤, 날짜 그룹핑, 입출금 시각 구분이 없으면 모바일 가독성이 떨어졌습니다.</li>
+            </ul>
+          </article>
+          <article class="star-box">
+            <span class="star-label">목표</span>
+            <h3>계좌 연결, 분석, 미션, 추천을 하나의 화면 흐름으로 연결하기</h3>
+            <ul class="list compact">
+              <li>CODEF 계좌 데이터를 자산 분석, 소비 분석, 미션, 상품 추천에서 재사용할 수 있도록 화면/API 흐름을 정리했습니다.</li>
+              <li>계좌 연결 단계마다 로딩 문구, 오류 횟수, 완료 계좌 목록을 제공해 사용자가 진행 상태를 이해하게 했습니다.</li>
+              <li>숫자 데이터는 차트, 문장 피드백, 카드, 캐릭터, 뱃지로 바꿔 행동 유도형 UX로 구성했습니다.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="diagram">
+          <div class="diagram-row">
+            <div class="node"><strong>계좌 연결</strong><span>은행 선택, 인증 입력, CODEF 연동</span></div>
+            <div class="node"><strong>거래 내역</strong><span>limit/offset, 날짜 그룹, 무한 스크롤</span></div>
+            <div class="node"><strong>자산 분석</strong><span>소비 차트, 평균 비교, 상품 추천</span></div>
+            <div class="node"><strong>행동 유도</strong><span>일간/월간 미션, 뱃지, 커뮤니티</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="bebig-3" data-page="06">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">01 BeBig · 해결책 / 성과</p>
+            <h2>금융 데이터를 읽히는 화면과 반복 사용 동기로 바꿨습니다.</h2>
+          </div>
+          <span class="project-no">BeBig 3/3</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>해결책</h3>
+            <ul class="list dense">
+              <li>Vue Router를 도메인별로 분리해 홈, 자산, 미션, 커뮤니티, 마이페이지 진입 흐름을 명확히 구성했습니다.</li>
+              <li>Pinia와 LocalStorage로 로그인 상태, 은행 선택, 커뮤니티 페이지 상태를 유지했습니다.</li>
+              <li>Axios Interceptor와 refresh token 확인 로직으로 인증 실패 시 사용자가 어색한 화면에 남지 않게 처리했습니다.</li>
+              <li>계좌 연결은 단계별 로딩 메시지와 오류 안내로 민감한 입력 과정의 불안을 줄였습니다.</li>
+              <li>거래 내역은 무한 스크롤과 날짜별 그룹핑, 입출금 색상 구분으로 읽기 쉽게 구성했습니다.</li>
+              <li>금융 유형 검사는 질문 랜덤화, 월수입 질문 고정, 숫자 검증, 금액 포맷팅, 유형 산출 로직을 화면에서 일관되게 처리했습니다.</li>
+              <li>자산 분석은 Chart.js 월별 소비 그래프, 평균선, 전월 대비 문장 피드백, 주거래 은행 기반 상품 추천 캐러셀로 구성했습니다.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>성과</h3>
+            <ul class="list dense">
+              <li>KB IT's Your Life 종합실무프로젝트 최우수상을 수상했습니다.</li>
+              <li>실제 계좌 데이터가 자산 분석, 미션, 상품 추천, 커뮤니티로 이어지는 사용자 흐름을 완성했습니다.</li>
+              <li>PM으로 Jira, Notion, Figma, Git Flow, PR 리뷰 기준을 운영해 팀 협업 비용을 줄였습니다.</li>
+              <li>프론트엔드에서 단순 조회가 아니라 사용자가 다음 행동을 이해하는 금융 UX를 구현했습니다.</li>
+              <li>약 1만 명 유저, 2.5만 계좌, 9만 거래내역 규모의 MockData 흐름과 실제 팀원 계좌 데이터 기반 시나리오를 함께 검증했습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="gbcamera-1" data-page="07">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">02 GBCamera · 개요 / 역할</p>
+            <h2>촬영부터 출력까지 자동화한 현장 운영형 포토부스</h2>
+          </div>
+          <span class="project-no">GBCamera 1/3</span>
+        </div>
+        <div class="row wide-left">
+          <div>
+            <div class="star-grid two">
+              <article class="star-box">
+                <span class="star-label">개요</span>
+                <h3>무인 부스에서 바로 쓰는 촬영 앱</h3>
+                <p>
+                  GBCamera는 행사 부스에서 자동 촬영, 사진 선택, 프레임 합성, 서버 저장, QR 공유,
+                  로컬 프린터 출력까지 연결한 포토부스 프로젝트입니다.
+                </p>
+              </article>
+              <article class="star-box">
+                <span class="star-label">역할</span>
+                <h3>개인 프로젝트 · Fullstack · 운영</h3>
+                <p>
+                  기획, React UI, Electron 앱, Spring Boot API, MySQL, Vercel/EC2 배포, 현장 부스 운영까지 단독으로 수행했습니다.
+                </p>
+              </article>
+            </div>
+            <div class="tags">
+              <span class="tag rose">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Electron</span>
+              <span class="tag teal">Spring Boot</span>
+              <span class="tag">MyBatis</span>
+              <span class="tag blue">Vercel · EC2</span>
+            </div>
+            <div class="detail-grid">
+              <article class="detail-card"><strong>촬영 앱</strong><p>React/Zustand로 촬영 단계 상태를 관리하고 MediaDevices와 Canvas로 촬영, 선택, 합성을 구현했습니다.</p></article>
+              <article class="detail-card"><strong>데스크톱 연동</strong><p>Electron IPC와 Context Bridge로 프린터 목록 조회, 선택 저장, silent print를 연결했습니다.</p></article>
+              <article class="detail-card"><strong>운영/배포</strong><p>Spring API, MySQL BLOB 저장, Vercel proxy, EC2/Docker 배포, 현장 장비 테스트까지 단독 수행했습니다.</p></article>
+            </div>
+          </div>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 이미지</span>
+            <strong>GBCamera 현장/앱 대표 화면</strong>
+            <p>이미지 위치: 행사 부스에서 촬영 앱이 실행되는 사진 또는 시작 화면. 현장에서 실제 운영한 포토부스라는 신뢰를 주는 위치입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="gbcamera-2" data-page="08">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">02 GBCamera · 문제상황 / 목표</p>
+            <h2>제가 해결해야 한 문제는 촬영, 저장, 공유, 출력을 운영자 개입 없이 연결하는 것이었습니다.</h2>
+          </div>
+          <span class="project-no">GBCamera 2/3</span>
+        </div>
+        <div class="star-grid two">
+          <article class="star-box">
+            <span class="star-label">문제상황</span>
+            <h3>브라우저 UI만으로는 카메라·프린터·결과 공유를 안정적으로 묶기 어렵다</h3>
+            <ul class="list compact">
+              <li>브라우저 환경만으로는 로컬 프린터 목록 조회와 무인 출력을 안정적으로 제어하기 어려웠습니다.</li>
+              <li>현장마다 카메라 장치, 해상도, FPS, 프린터 이름이 달라 운영자용 설정 화면이 필요했습니다.</li>
+              <li>촬영 결과를 휴대폰으로 전달하려면 서버 저장, 고유 index, QR 결과 페이지가 함께 필요했습니다.</li>
+            </ul>
+          </article>
+          <article class="star-box">
+            <span class="star-label">목표</span>
+            <h3>참여자 플로우와 운영자 장비 설정을 분리하기</h3>
+            <ul class="list compact">
+              <li>자동 촬영, 사진 선택, 프레임 합성, 서버 저장, 프린터 출력, QR 공유를 하나의 state flow로 연결했습니다.</li>
+              <li>카메라/프린터 설정은 촬영 흐름과 분리해 운영자가 앱 안에서 즉시 조정할 수 있게 했습니다.</li>
+              <li>프린터 출력 실패 가능성을 고려해 QR 결과 조회를 독립 경로로 유지했습니다.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="diagram">
+          <div class="diagram-row">
+            <div class="node"><strong>자동 촬영</strong><span>6초 간격, 총 6장</span></div>
+            <div class="node"><strong>사진 선택</strong><span>참여자가 3장 선택</span></div>
+            <div class="node"><strong>Canvas 합성</strong><span>프레임 + 사진</span></div>
+            <div class="node"><strong>출력/공유</strong><span>silent print + QR</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="gbcamera-3" data-page="09">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">02 GBCamera · 해결책 / 성과</p>
+            <h2>브라우저, 데스크톱, 서버, 모바일을 한 흐름으로 묶었습니다.</h2>
+          </div>
+          <span class="project-no">GBCamera 3/3</span>
+        </div>
+        <div class="row equal">
+          <div>
+            <article class="panel">
+              <h3>해결책</h3>
+              <ul class="list dense">
+                <li>MediaDevices API로 카메라 목록, 해상도, FPS, 전후면 장치를 제어했습니다.</li>
+                <li>Canvas에서 object-fit cover 방식의 비율 보정과 devicePixelRatio 기반 고해상도 합성을 구현했습니다.</li>
+                <li>Electron IPC와 Context Bridge로 프린터 목록 조회, 선택 저장, silent print를 구현했습니다.</li>
+                <li>Spring Boot/MyBatis/MySQL로 고유 index 생성, Base64 이미지 BLOB 저장, QR 기반 조회 API를 만들었습니다.</li>
+                <li>Vercel Serverless Proxy로 HTTPS 프론트와 HTTP EC2 백엔드의 Mixed Content 문제를 우회했습니다.</li>
+                <li>SecureRandom 기반 22자 index를 생성하고 DB 중복 시 재시도해 QR 결과 링크 충돌 가능성을 낮췄습니다.</li>
+                <li>Docker multi-stage build와 GitHub Actions로 백엔드 이미지를 Docker Hub에 자동 빌드/푸시하는 흐름을 구성했습니다.</li>
+              </ul>
+            </article>
+            <div class="metric-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 12px;">
+              <div class="metric"><strong>50명</strong><span>중고등학생 대상 실제 부스 운영</span></div>
+              <div class="metric"><strong>6장</strong><span>자동 촬영 후 3장 선택</span></div>
+              <div class="metric"><strong>1인</strong><span>기획부터 배포와 운영까지 단독 수행</span></div>
+            </div>
+          </div>
+          <div class="slot-grid">
+            <div class="slot-card"><span class="slot-label">우측 1</span><strong>카메라 설정 화면</strong><p>해상도, FPS, deviceId, 프린터 선택을 보여주는 운영자 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 2</span><strong>자동 촬영 화면</strong><p>6초 타이머, 6장 촬영, 셔터 사운드 흐름이 보이는 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 3</span><strong>프레임 합성 화면</strong><p>3장 선택 후 Canvas 합성 결과가 보이는 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 4</span><strong>QR/출력 결과 화면</strong><p>QR 공유와 무인 프린트 완료 흐름을 보여주는 화면</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="newstagram-1" data-page="10">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">03 Newstagram · 개요 / 역할</p>
+            <h2>RSS 뉴스 수집부터 AI 추천까지 연결한 뉴스 큐레이션 서비스</h2>
+          </div>
+          <span class="project-no">Newstagram 1/4</span>
+        </div>
+        <div class="row wide-left">
+          <div>
+            <div class="star-grid two">
+              <article class="star-box">
+                <span class="star-label">개요</span>
+                <h3>실시간 이슈와 개인화 뉴스를 제공</h3>
+                <p>
+                  여러 언론사의 RSS 기사를 수집하고, 기사 임베딩과 사용자 행동 로그를 기반으로
+                  실시간 이슈, 개인화 추천, 자연어 프롬프트 검색을 제공했습니다.
+                </p>
+              </article>
+              <article class="star-box">
+                <span class="star-label">역할</span>
+                <h3>PM · Backend · Frontend</h3>
+                <p>
+                  PM으로 기능 우선순위와 서버 구조를 잡고, Backend에서는 RSS/임베딩/클러스터링/로그 파이프라인을,
+                  Frontend에서는 주요 뉴스 화면과 API 연동을 구현했습니다.
+                </p>
+              </article>
+            </div>
+            <div class="tags">
+              <span class="tag teal">Spring Batch</span>
+              <span class="tag teal">Quartz</span>
+              <span class="tag">PostgreSQL · PgVector</span>
+              <span class="tag">Kafka</span>
+              <span class="tag rose">Vue 3</span>
+              <span class="tag blue">DBSCAN</span>
+            </div>
+            <div class="detail-grid">
+              <article class="detail-card"><strong>수집/임베딩</strong><p>RSS entry 정규화, 썸네일 추출, 중복 URL skip, 1536차원 기사 임베딩 저장을 구현했습니다.</p></article>
+              <article class="detail-card"><strong>추천 파이프라인</strong><p>DBSCAN 이슈 클러스터링, PgVector 유사도 검색, Kafka 클릭 로그 기반 선호 벡터 갱신을 연결했습니다.</p></article>
+              <article class="detail-card"><strong>화면/API 조율</strong><p>핫이슈, 프롬프트 검색, 개인 추천, 기사 클릭 로깅 API를 화면 단위로 계약화했습니다.</p></article>
+            </div>
+          </div>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 이미지</span>
+            <strong>Newstagram 메인 뉴스 피드</strong>
+            <p>이미지 위치: 실시간/일간/주간 핫 이슈 탭과 기사 카드가 보이는 메인 화면. 프로젝트 첫 장에서는 사용자가 보는 결과물을 배치합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="newstagram-2" data-page="11">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">03 Newstagram · 문제상황 / 목표</p>
+            <h2>제가 해결해야 한 문제는 외부 뉴스 데이터를 추천 가능한 파이프라인으로 바꾸는 것이었습니다.</h2>
+          </div>
+          <span class="project-no">Newstagram 2/4</span>
+        </div>
+        <div class="star-grid two">
+          <article class="star-box">
+            <span class="star-label">문제상황</span>
+            <h3>RSS, 임베딩, 로그, 추천이 한 흐름으로 이어지지 않으면 기능이 분절된다</h3>
+            <ul class="list compact">
+              <li>RSS feed마다 XML 구조, 본문 형식, 썸네일 위치, tracking URL이 달라 정규화 계층이 필요했습니다.</li>
+              <li>단순 키워드 검색으로는 표현이 다른 유사 기사와 자연어 검색 의도를 처리하기 어려웠습니다.</li>
+              <li>개인 추천은 클릭 로그가 쌓여야 동작하므로 콜드스타트 사용자에 대한 초기 선호 벡터가 필요했습니다.</li>
+              <li>외부 RSS와 AI 임베딩 API 실패가 배치 전체 실패로 번지지 않게 feed 단위 처리와 로그가 필요했습니다.</li>
+            </ul>
+          </article>
+          <article class="star-box">
+            <span class="star-label">목표</span>
+            <h3>수집, 벡터화, 클러스터링, 로그 기반 추천을 자동화하기</h3>
+            <ul class="list compact">
+              <li>여러 언론사 RSS를 주기적으로 수집하고 URL unique constraint로 중복 저장을 방지했습니다.</li>
+              <li>기사 내용을 임베딩해 PgVector에 저장하고 DBSCAN으로 유사 기사 클러스터와 이슈 랭킹을 만들었습니다.</li>
+              <li>기사 클릭 로그는 Kafka로 비동기 수집하고 최근 30개 로그에 시간 감쇠를 적용해 선호 벡터를 갱신했습니다.</li>
+              <li>프롬프트 검색과 개인 추천은 같은 벡터 검색 기반으로 연결해 기능별 구현 중복을 줄였습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="newstagram-3" data-page="12">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">03 Newstagram · 해결책</p>
+            <h2>데이터 파이프라인을 서버 단위로 분리하고 실패를 추적 가능하게 만들었습니다.</h2>
+          </div>
+          <span class="project-no">Newstagram 3/4</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>해결책</h3>
+            <ul class="list dense">
+              <li><code>api-server</code>, <code>rss-collector</code>, <code>logging-server</code>, <code>domain</code> 모듈로 역할을 분리했습니다.</li>
+              <li>Rome/Jsoup으로 RSS entry를 Article로 변환하고, 썸네일 추출, HTML 정제, tracking URL 필터링을 처리했습니다.</li>
+              <li>Spring Batch와 Quartz로 RSS 수집, 기사 임베딩, 실시간/일간/주간 클러스터링을 스케줄링했습니다.</li>
+              <li>기사 임베딩은 PgVector에 저장하고, Smile DBSCAN으로 유사 기사 그룹을 만들었습니다.</li>
+              <li>Kafka 클릭 로그 consumer가 최근 30개 로그에 시간 감쇠를 적용해 사용자 선호 벡터를 갱신했습니다.</li>
+              <li>Redis look-aside cache와 system job log로 조회 비용과 운영 추적성을 개선했습니다.</li>
+              <li>임베딩은 제목/본문 정규화 후 batch 단위로 호출하고, 1536차원 PgVector literal로 변환해 저장했습니다.</li>
+              <li>Kafka DLT, feed 단위 skip, API 응답 개수 불일치 로깅으로 외부 RSS/AI 실패가 전체 배치를 멈추지 않도록 했습니다.</li>
+            </ul>
+          </article>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 도식</span>
+            <strong>Newstagram 전체 시스템 아키텍처</strong>
+            <p>이미지 위치: api-server, rss-collector, logging-server, PostgreSQL/PgVector, Kafka, Redis가 연결된 구조도. 데이터 파이프라인 설명 슬라이드의 핵심 보조 자료입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="newstagram-4" data-page="13">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">03 Newstagram · 성과</p>
+            <h2>AI 기능을 뉴스 발견 경험으로 안정적으로 연결했습니다.</h2>
+          </div>
+          <span class="project-no">Newstagram 4/4</span>
+        </div>
+        <div class="row equal">
+          <div>
+            <article class="panel">
+              <h3>성과</h3>
+              <ul class="list dense">
+                <li>SSAFY 1학기 프로젝트 우수상, 서울 11반 2등을 수상했습니다.</li>
+                <li>RSS 수집, 임베딩, 클러스터링, Hot Issue API까지 이어지는 자동 데이터 파이프라인을 구현했습니다.</li>
+                <li>사용자 클릭 로그 기반 개인화 추천과 콜드스타트 설문 기반 초기 선호 벡터 생성을 구현했습니다.</li>
+                <li>프롬프트 검색에서 Komoran, LLM 카테고리 추론, 벡터 검색, 검색 이력 관리를 결합했습니다.</li>
+                <li>PM으로 API 계약과 화면 흐름을 정리해 FE/BE 병렬 개발을 가능하게 했습니다.</li>
+                <li>검색/추천/핫이슈를 모두 벡터 기반으로 연결해 “목록 조회”가 아니라 뉴스 발견 흐름으로 제품 경험을 설계했습니다.</li>
+              </ul>
+            </article>
+          </div>
+          <div class="slot-grid">
+            <div class="slot-card"><span class="slot-label">우측 1</span><strong>DBSCAN 클러스터링</strong><p>유사 기사 묶음과 대표 기사 선택 흐름을 보여주는 도식</p></div>
+            <div class="slot-card"><span class="slot-label">우측 2</span><strong>프롬프트 검색 화면</strong><p>자연어 입력, 카테고리 추론, 검색 결과 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 3</span><strong>ERD 또는 PgVector 구조</strong><p>articles embedding, users preference_embedding, logs 관계</p></div>
+            <div class="slot-card"><span class="slot-label">우측 4</span><strong>클릭 로그 시퀀스</strong><p>기사 클릭 → Kafka → 선호 벡터 갱신 흐름</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="a601-1" data-page="14">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">04 A601 · 개요 / 역할</p>
+            <h2>WebRTC와 WebSocket으로 완성한 실시간 AI 마피아 게임</h2>
+          </div>
+          <span class="project-no">A601 1/4</span>
+        </div>
+        <div class="row wide-left">
+          <div>
+            <div class="star-grid two">
+              <article class="star-box">
+                <span class="star-label">개요</span>
+                <h3>AI 판사가 지배하는 SF 서바이벌 게임</h3>
+                <p>
+                  A601은 실시간 영상/음성 대화와 게임 이벤트를 결합하고,
+                  플레이어 변론을 AI가 분석해 처형 대상을 결정하는 웹 기반 마피아 게임입니다.
+                </p>
+              </article>
+              <article class="star-box">
+                <span class="star-label">역할</span>
+                <h3>PM · Frontend · 실시간 UX</h3>
+                <p>
+                  PM으로 게임 루프와 협업 컨벤션을 정리했고, Frontend에서 LiveKit, STOMP, Zustand 기반 실시간 게임 화면과 단계 전환을 구현했습니다.
+                </p>
+              </article>
+            </div>
+            <div class="tags">
+              <span class="tag rose">React</span>
+              <span class="tag">Zustand</span>
+              <span class="tag blue">LiveKit WebRTC</span>
+              <span class="tag">STOMP/SockJS</span>
+              <span class="tag amber">AI Judge</span>
+            </div>
+            <div class="detail-grid">
+              <article class="detail-card"><strong>실시간 연결</strong><p>LiveKit Room 연결과 STOMP 구독/발행을 분리하고 LobbyShell에서 진입/이탈을 통합 처리했습니다.</p></article>
+              <article class="detail-card"><strong>게임 상태</strong><p>Zustand slice와 StageRouter로 lobby, role, day, ai, judgment, night, result 전환을 관리했습니다.</p></article>
+              <article class="detail-card"><strong>예외 UX</strong><p>AI 판결 지연, 미제출자, 사망자 권한, 밤 페이즈 시청 권한, 방장/준비 상태를 화면에 반영했습니다.</p></article>
+            </div>
+          </div>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 이미지</span>
+            <strong>A601 대표 게임 화면</strong>
+            <p>이미지 위치: SF 콘셉트가 보이는 인게임 화면 또는 대기방 화면. 첫 장에서는 실시간 영상 게임이라는 인상이 바로 드러나야 합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="a601-2" data-page="15">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">04 A601 · 문제상황 / 목표</p>
+            <h2>제가 해결해야 한 문제는 영상 연결과 게임 상태를 동시에 안정화하는 것이었습니다.</h2>
+          </div>
+          <span class="project-no">A601 2/4</span>
+        </div>
+        <div class="star-grid two">
+          <article class="star-box">
+            <span class="star-label">문제상황</span>
+            <h3>미디어 권한과 게임 이벤트가 따로 움직이면 phase 전환이 깨진다</h3>
+            <ul class="list compact">
+              <li>낮, 밤, AI 판결, 사망 상태마다 영상/음성 publish/subscribe 권한과 UI 상호작용이 달라져야 했습니다.</li>
+              <li>WebSocket 메시지 순서가 꼬이면 AI 판결 화면이 생략되거나 다음 phase가 먼저 노출될 수 있었습니다.</li>
+              <li>AI 판결 API 지연, 변론 미제출자, 연결 끊김이 있어도 게임 루프가 멈추지 않아야 했습니다.</li>
+            </ul>
+          </article>
+          <article class="star-box">
+            <span class="star-label">목표</span>
+            <h3>서버 권위 상태를 기준으로 클라이언트 stage와 권한을 동기화하기</h3>
+            <ul class="list compact">
+              <li>영상/음성은 LiveKit WebRTC, 게임 이벤트는 STOMP WebSocket으로 역할을 분리했습니다.</li>
+              <li>서버 권위 상태를 기준으로 클라이언트 stage, 타이머, 직업 능력, 영상 타일 상태를 반영했습니다.</li>
+              <li>AI 판결이 늦어져도 pending stage queue로 대기 연출 후 결과 화면과 다음 phase를 순서대로 보여줬습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="a601-3" data-page="16">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">04 A601 · 해결책</p>
+            <h2>미디어 권한, 게임 이벤트, 화면 stage를 분리해 제어했습니다.</h2>
+          </div>
+          <span class="project-no">A601 3/4</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>해결책</h3>
+            <ul class="list dense">
+              <li><code>LobbyShell</code>에서 LiveKit Room 연결, STOMP 연결, 방 메타 조회, stage 라우팅, disconnect 처리를 통합했습니다.</li>
+              <li><code>StageRouter</code>로 lobby, role, morning, ai, waiting, judgment, night, result, ending 화면을 분리했습니다.</li>
+              <li>Zustand를 roomSlice, lobbySlice, inGameSlice로 나눠 입장 정보, 게임 상태, UI 상태를 분리했습니다.</li>
+              <li><code>GAME_PHASE</code>와 <code>AI_RESULT</code> 처리를 분리하고, pending stage queue로 판결 연출 후 다음 단계가 반영되게 했습니다.</li>
+              <li>사망자, 외계인 밤 권한, CCTV 결과, 보호 대상, 타겟 확정 상태를 영상 타일 UI에 반영했습니다.</li>
+              <li>낮/밤/사망자 상태에 따라 LiveKit publish/subscribe 권한과 STOMP 게임 이벤트를 분리해 처리했습니다.</li>
+              <li>6인/8인 역할 풀, 방장 권한, 준비 상태, AI 변론 미제출/지연 같은 예외를 화면 상태로 흡수했습니다.</li>
+            </ul>
+          </article>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 도식</span>
+            <strong>WebRTC / WebSocket 분리 아키텍처</strong>
+            <p>이미지 위치: Frontend, Spring Backend, Redis, LiveKit Server, AI Server가 연결된 구조도. 영상/음성과 게임 이벤트를 분리한 판단을 설명하는 위치입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="a601-4" data-page="17">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">04 A601 · 성과</p>
+            <h2>실시간성과 몰입형 UX를 모두 갖춘 게임 흐름을 완성했습니다.</h2>
+          </div>
+          <span class="project-no">A601 4/4</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>성과</h3>
+            <ul class="list dense">
+              <li>SSAFY 공통프로젝트 웹기술 트랙 서울 6반 1등, 우수상을 수상했습니다.</li>
+              <li>방 생성, 대기방, 역할 배정, 낮 토론, AI 변론, AI 판결, 밤 액션, 결과, 엔딩까지 전체 게임 루프를 완성했습니다.</li>
+              <li>WebRTC는 영상/음성, WebSocket은 게임 이벤트로 분리해 복합 실시간 서비스를 구현했습니다.</li>
+              <li>PM으로 제한된 기간 안에서 핵심 게임 루프 완성을 최우선으로 두고 기능 범위를 조율했습니다.</li>
+              <li>실시간 UX에서 race condition이 생기기 쉬운 판결 연출과 phase 전환을 큐 기반으로 정리해 몰입 흐름을 유지했습니다.</li>
+            </ul>
+          </article>
+          <div class="slot-grid">
+            <div class="slot-card"><span class="slot-label">우측 1</span><strong>대기방</strong><p>LiveKit 영상 타일, 준비 상태, 방장 시작 조건 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 2</span><strong>낮 토론</strong><p>생존자 영상/음성, 타이머, 변론 안내 오버레이</p></div>
+            <div class="slot-card"><span class="slot-label">우측 3</span><strong>AI 판결</strong><p>AI 분석 대기와 판결 결과 연출이 보이는 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 4</span><strong>밤 액션</strong><p>외계인/시스템 엔지니어/영상 엔지니어 능력 UI</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="yongdon-1" data-page="18">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">05 용돈농장 · 개요 / 역할</p>
+            <h2>청소년 금융 활동을 실제 돈의 흐름처럼 경험하게 한 교육 플랫폼</h2>
+          </div>
+          <span class="project-no">용돈농장 1/4</span>
+        </div>
+        <div class="row wide-left">
+          <div>
+            <div class="star-grid two">
+              <article class="star-box">
+                <span class="star-label">개요</span>
+                <h3>용돈, 예적금, 일과, 대출, 신용점수</h3>
+                <p>
+                  용돈농장은 학생이 소비, 저축, 대출, 상환, 신용 관리를 작게 경험하고,
+                  부모가 이를 관리하며 금융 책임을 함께 학습하는 서비스입니다.
+                </p>
+              </article>
+              <article class="star-box">
+                <span class="star-label">역할</span>
+                <h3>Backend 개발</h3>
+                <p>
+                  DB 설계, REST API, QueryDSL 조회 최적화, SSAFY 금융 API 연동, 인증/인가, 도메인 비즈니스 로직을 담당했습니다.
+                </p>
+              </article>
+            </div>
+            <div class="tags">
+              <span class="tag teal">Java 21</span>
+              <span class="tag teal">Spring Boot</span>
+              <span class="tag">JPA</span>
+              <span class="tag">QueryDSL</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Redis</span>
+              <span class="tag blue">SSAFY 금융 API</span>
+            </div>
+            <div class="detail-grid">
+              <article class="detail-card"><strong>도메인 모델</strong><p>사용자/자녀, 예적금, 일과, 대출, 신용점수를 상태와 이력 중심으로 분리해 설계했습니다.</p></article>
+              <article class="detail-card"><strong>복합 조회</strong><p>QueryDSL로 가입 가능 상품 우선 정렬, 중복 가입 제외, 커서 페이지네이션, 대시보드 집계를 구현했습니다.</p></article>
+              <article class="detail-card"><strong>외부 연동</strong><p>SSAFY 금융 API 요청 생성을 Factory/Client/Validator로 분리하고 인증/인가 흐름과 연결했습니다.</p></article>
+            </div>
+          </div>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 이미지</span>
+            <strong>용돈농장 서비스 대표 화면</strong>
+            <p>이미지 위치: 부모/자녀 홈, 자녀 금융 대시보드, 예적금/대출 카드가 보이는 화면. 백엔드 포트폴리오지만 사용자 도메인이 한눈에 보여야 합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="yongdon-2" data-page="19">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">05 용돈농장 · 문제상황 / 목표</p>
+            <h2>제가 해결해야 한 문제는 금융 이벤트를 상태, 이력, 권한으로 안전하게 보존하는 것이었습니다.</h2>
+          </div>
+          <span class="project-no">용돈농장 2/4</span>
+        </div>
+        <div class="star-grid two">
+          <article class="star-box">
+            <span class="star-label">문제상황</span>
+            <h3>부모·자녀 권한과 외부 금융 API 상태가 섞이면 정합성이 무너진다</h3>
+            <ul class="list compact">
+              <li>부모와 자녀는 같은 도메인 데이터를 보지만 신청, 승인, 상환, 리뷰 권한이 서로 달라야 했습니다.</li>
+              <li>예적금, 대출, 일과 보상은 외부 금융 API 호출과 내부 DB 상태 변경이 함께 발생했습니다.</li>
+              <li>금융 이벤트가 신용점수와 거래 장부로 남지 않으면 사용자가 행동의 결과를 추적하기 어려웠습니다.</li>
+            </ul>
+          </article>
+          <article class="star-box">
+            <span class="star-label">목표</span>
+            <h3>금융 행동마다 상태 전환, 거래 장부, 신용점수 이력을 남기기</h3>
+            <ul class="list compact">
+              <li>예금/적금 가입, 해지, 만기, 대출 승인, 상환, 일과 보상을 명시적 상태 전환으로 처리했습니다.</li>
+              <li>자녀 신용점수, 평점, 대출 장부, 가입 이력을 별도 테이블로 분리해 추적 가능하게 모델링했습니다.</li>
+              <li>외부 API 요청 생성과 검증은 Client/Factory 계층으로 분리해 서비스 로직의 도메인 책임을 명확히 했습니다.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="diagram">
+          <div class="diagram-row">
+            <div class="node"><strong>금융 행동</strong><span>송금, 가입, 대출, 보상</span></div>
+            <div class="node"><strong>외부 API</strong><span>SSAFY 금융망 호출</span></div>
+            <div class="node"><strong>내부 상태</strong><span>가입/대출/일과 상태</span></div>
+            <div class="node"><strong>이력 반영</strong><span>신용점수, 장부, 거래 내역</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="yongdon-3" data-page="20">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">05 용돈농장 · 해결책</p>
+            <h2>도메인 모델과 QueryDSL 조회를 중심으로 백엔드를 구현했습니다.</h2>
+          </div>
+          <span class="project-no">용돈농장 3/4</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>해결책</h3>
+            <ul class="list dense">
+              <li><code>users</code>, <code>child</code>, <code>deposit</code>, <code>saving</code>, <code>child_deposit</code>, <code>child_saving</code>, <code>child_loan</code>, <code>credit_score</code> 등 핵심 테이블을 설계했습니다.</li>
+              <li>상품 마스터와 가입 이력, 대출 상태와 대출 거래 장부, 현재 신용점수와 변경 이력을 분리했습니다.</li>
+              <li>QueryDSL로 가입 가능 상품 우선 정렬, 중복 가입 제외, 커서 페이지네이션, 자녀 대시보드 집계, 대출 거래 동적 검색을 구현했습니다.</li>
+              <li>SSAFY 금융 API를 Client, Request Factory, Spec, Validator로 분리해 서비스 코드가 도메인 흐름에 집중하게 했습니다.</li>
+              <li>카카오 OAuth2, JWT, Redis Refresh Token Rotation, HttpOnly Cookie를 기반으로 인증 흐름을 구성했습니다.</li>
+              <li>예적금 ACTIVE/TERMINATED/COMPLETE, 대출 WAIT/ACTIVE/COMPLETE, 일과 WAIT/ACTIVE/REQUEST/COMPLETE 상태를 명시적으로 모델링했습니다.</li>
+              <li>신용점수 변경은 before score, delta, event type, event id를 저장해 금융 이벤트별 추적 가능성을 확보했습니다.</li>
+            </ul>
+          </article>
+          <div class="diagram">
+            <div class="diagram-row">
+              <div class="node dark-node"><strong>Controller</strong><span>요청 검증과 인증 사용자 주입</span></div>
+              <div class="node dark-node"><strong>Service</strong><span>도메인 정책과 트랜잭션</span></div>
+              <div class="node dark-node"><strong>Repository</strong><span>JPA + QueryDSL 조회</span></div>
+              <div class="node dark-node"><strong>External Client</strong><span>SSAFY API 추상화</span></div>
+            </div>
+            <div class="slot-grid">
+              <div class="slot-card"><span class="slot-label">우측 1</span><strong>DB/ERD 도식</strong><p>users, child, 예적금, loan, credit_score 관계</p></div>
+              <div class="slot-card"><span class="slot-label">우측 2</span><strong>SSAFY 금융 API 흐름</strong><p>가입/해지/송금과 내부 상태 변경 순서</p></div>
+              <div class="slot-card"><span class="slot-label">우측 3</span><strong>QueryDSL 조회 예시</strong><p>가입 가능 상품 우선 정렬, 커서 페이지네이션</p></div>
+              <div class="slot-card"><span class="slot-label">우측 4</span><strong>신용점수 이력 화면</strong><p>금융 이벤트가 점수 변화로 남는 결과 화면</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="yongdon-4" data-page="21">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">05 용돈농장 · 성과</p>
+            <h2>금융 도메인의 상태, 이력, 권한, 외부 연동을 함께 다뤘습니다.</h2>
+          </div>
+          <span class="project-no">용돈농장 4/4</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>성과</h3>
+            <ul class="list dense">
+              <li>REST Controller 25개, API Mapping 62개, QueryDSL Custom Repository Impl 9개 규모의 백엔드 기능을 구현했습니다.</li>
+              <li>학생/부모 역할 기반 접근 제어와 부모-자녀 소유권 검증으로 단순 role 체크 이상의 도메인 권한을 구현했습니다.</li>
+              <li>예적금 만기/해지, 대출 승인/상환, 일과 보상 같은 금융 이벤트를 신용점수 이력과 거래 장부로 연결했습니다.</li>
+              <li>AI 소비 코치 SSE, Redis 캐시/락, S3 Presigned URL 등 사용자 경험과 비용을 고려한 기능도 함께 구현했습니다.</li>
+              <li>외부 금융 API 호출 순서와 내부 DB 상태 변경을 서비스 트랜잭션 안에서 조율해 실제 금융 흐름과 학습용 도메인 상태를 함께 보존했습니다.</li>
+            </ul>
+          </article>
+          <div class="metric-grid">
+            <div class="metric"><strong>25</strong><span>REST Controller</span></div>
+            <div class="metric"><strong>62</strong><span>API Mapping</span></div>
+            <div class="metric"><strong>16</strong><span>핵심 DB 테이블</span></div>
+            <div class="metric"><strong>9</strong><span>QueryDSL Custom Repository</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="autoqa-1" data-page="22">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">06 AutoQA · 개요 / 역할</p>
+            <h2>AI가 실제 브라우저에서 실행 가능한 QA suite를 만드는 플랫폼</h2>
+          </div>
+          <span class="project-no">AutoQA 1/5</span>
+        </div>
+        <div class="row wide-left">
+          <div>
+            <div class="star-grid two">
+              <article class="star-box">
+                <span class="star-label">개요</span>
+                <h3>URL 입력부터 결과 리포트까지 자동화</h3>
+                <p>
+                  AutoQA는 웹 페이지를 분석하고 AI가 QA 시나리오를 생성한 뒤,
+                  Playwright로 자동 실행하고 결과 리포트와 Jira 이슈화를 제공하는 AI QA 자동화 SaaS입니다.
+                </p>
+              </article>
+              <article class="star-box">
+                <span class="star-label">역할</span>
+                <h3>PM · AI</h3>
+                <p>
+                  PM으로 비동기 파이프라인과 책임 경계를 설계했고, AI 담당으로 데이터 수집/정제, Qwen3-8B fine-tuning,
+                  vLLM 추론, 평가 지표를 구축했습니다.
+                </p>
+              </article>
+            </div>
+            <div class="tags">
+              <span class="tag blue">Qwen3-8B</span>
+              <span class="tag">QLoRA · SFT · DPO</span>
+              <span class="tag">vLLM</span>
+              <span class="tag teal">Playwright</span>
+              <span class="tag">SQS · Redis · S3</span>
+              <span class="tag rose">PM</span>
+            </div>
+            <div class="detail-grid">
+              <article class="detail-card"><strong>PM 구조 설계</strong><p>PAGE_ANALYSIS, SCENARIO_GENERATE, QA_EXECUTE 단계와 SQS/Redis/S3 책임 경계를 정의했습니다.</p></article>
+              <article class="detail-card"><strong>AI 데이터</strong><p>site-summary와 analysis-summary를 compact input으로 압축하고 SFT/DPO 학습 데이터를 정제했습니다.</p></article>
+              <article class="detail-card"><strong>실행 계약</strong><p>nodeId, step type, matcher, popup/form/destructive action 정책을 validator와 모델 학습에 반영했습니다.</p></article>
+            </div>
+          </div>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 이미지</span>
+            <strong>AutoQA 메인 또는 QA 리포트 화면</strong>
+            <p>이미지 위치: URL 입력, 진행 상태, QA 결과 리포트 중 하나. 첫 장에서는 URL 입력부터 리포트까지의 자동화 흐름이 바로 보여야 합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide band" id="autoqa-2" data-page="23">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">06 AutoQA · 문제상황 / 목표</p>
+            <h2>제가 해결해야 한 문제는 AI 출력을 실제 실행 가능한 QA 계약으로 제한하는 것이었습니다.</h2>
+          </div>
+          <span class="project-no">AutoQA 2/5</span>
+        </div>
+        <div class="star-grid two">
+          <article class="star-box">
+            <span class="star-label">문제상황</span>
+            <h3>LLM이 만든 시나리오는 검증 없이는 Playwright 실행기로 보낼 수 없다</h3>
+            <ul class="list compact">
+              <li>AI가 존재하지 않는 nodeId를 만들거나 다른 page brief의 요소를 target으로 쓰면 실행 전부터 실패합니다.</li>
+              <li>popup, form, select, maxlength, destructive action 같은 실행 규칙을 지키지 않으면 Playwright step이 깨집니다.</li>
+              <li>웹 분석 산출물은 raw 기준 token이 매우 커서 그대로는 fine-tuning과 추론 입력으로 사용하기 어려웠습니다.</li>
+              <li>AI 생성 결과를 그대로 실행하면 QA 실패 원인이 모델, locator, 실행기 중 어디인지 분리하기 어렵습니다.</li>
+            </ul>
+          </article>
+          <article class="star-box">
+            <span class="star-label">목표</span>
+            <h3>모델, validator, 실행기, 리포트를 분리해 실패 원인을 추적하기</h3>
+            <ul class="list compact">
+              <li>AI는 suite JSON 생성만 담당하고, 검증은 Backend validator, 실행은 Playwright Worker가 책임지게 분리했습니다.</li>
+              <li>SQS는 작업 분배, Redis/WebSocket은 실시간 UX, S3는 대용량 산출물 저장으로 역할을 나눴습니다.</li>
+              <li>모델 평가는 loss뿐 아니라 validator pass, hallucination, contract violation, diversity를 함께 보도록 설계했습니다.</li>
+              <li>대용량 분석 결과는 SQS payload가 아니라 S3 artifact URL로 넘겨 메시지 크기와 재처리 비용을 제어했습니다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="autoqa-3" data-page="24">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">06 AutoQA · 해결책 / PM Architecture</p>
+            <h2>AI와 실행기를 분리하고, 비동기 파이프라인을 표준화했습니다.</h2>
+          </div>
+          <span class="project-no">AutoQA 3/5</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>해결책: 제품 구조</h3>
+            <ul class="list dense">
+              <li><code>PAGE_ANALYSIS -> SCENARIO_GENERATE -> QA_EXECUTE</code> 3단계 표준 파이프라인을 정의했습니다.</li>
+              <li>AI 출력은 Backend validator를 통과해야 사용자 검토 단계로 넘어가게 했습니다.</li>
+              <li>검증 실패 시 AI 재요청, GMS fixer, drop fallback을 단계별로 적용했습니다.</li>
+              <li>SQS result queue와 Redis state snapshot을 기준으로 최종 상태를 복구할 수 있게 설계했습니다.</li>
+              <li>site-summary 우선 정책으로 AI가 단일 페이지가 아니라 사이트 전체 기능 분포를 보게 했습니다.</li>
+              <li>autoScenarioEligible, confidence score, same-page nodeId 제한, destructive action 금지 정책을 contract와 validator 양쪽에 반영했습니다.</li>
+              <li>Redis Pub/Sub은 화면 이벤트, SQS는 terminal event source of truth로 분리해 실시간 UX와 복구 가능성을 함께 잡았습니다.</li>
+            </ul>
+          </article>
+          <div class="image-placeholder large">
+            <span class="slot-label">우측 대형 도식</span>
+            <strong>SQS / Redis / S3 기반 비동기 아키텍처</strong>
+            <p>이미지 위치: Backend, Playwright Worker, AI Worker, SQS, Redis, S3, WebSocket의 책임 경계가 보이는 구조도. PM 의사결정 설명에 가장 중요한 이미지입니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="autoqa-4" data-page="25">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">06 AutoQA · 해결책 / AI Pipeline</p>
+            <h2>웹 분석 데이터를 학습 가능한 compact input으로 바꾸고 모델을 고도화했습니다.</h2>
+          </div>
+          <span class="project-no">AutoQA 4/5</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>해결책: AI 데이터와 모델</h3>
+            <ul class="list dense">
+              <li>raw site-summary와 analysis-summary에서 nodeId, role, purpose, confidence, functional path 중심 compact input을 설계했습니다.</li>
+              <li>avoid_auto_generation, ineligible target, page-target mismatch, nodeId hallucination 사례를 정제했습니다.</li>
+              <li>Gemma4 LoRA/QLoRA 실험의 OOM과 multimodal device map 리스크를 분석하고 Qwen3-8B로 전환했습니다.</li>
+              <li>SFT와 DPO 데이터를 만들고, contract-aware negative pair를 구성했습니다.</li>
+              <li>vLLM과 guided JSON 추론, partial scenario extraction, max_new_tokens 확장으로 긴 JSON 출력 문제를 진단했습니다.</li>
+              <li>139개 사이트 중 132개가 10K token을 넘는 raw input이어서, key 축약과 후보 cap으로 median 9~10K token compact input을 만들었습니다.</li>
+              <li>SFT 이후에는 validator 실패 패턴을 negative pair로 묶어 DPO 데이터에 반영하고, mode collapse 여부를 별도 점검했습니다.</li>
+            </ul>
+          </article>
+          <div class="metric-grid">
+            <div class="metric"><strong>139</strong><span>분석 대상 사이트</span></div>
+            <div class="metric"><strong>14K+</strong><span>원본 QA 시나리오</span></div>
+            <div class="metric"><strong>12,709</strong><span>clean scenario</span></div>
+            <div class="metric"><strong>7,791</strong><span>DPO negative pair</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="autoqa-5" data-page="26">
+      <div class="slide-inner center">
+        <div class="slide-title">
+          <div>
+            <p class="kicker">06 AutoQA · 성과</p>
+            <h2>AI 기능을 모델이 아니라 실행 가능한 시스템으로 다뤘습니다.</h2>
+          </div>
+          <span class="project-no">AutoQA 5/5</span>
+        </div>
+        <div class="row equal">
+          <article class="panel">
+            <h3>성과</h3>
+            <ul class="list dense">
+              <li>웹 분석 JSON을 Playwright 실행 가능한 QA suite JSON으로 변환하는 Qwen3-8B 기반 모델 파이프라인을 구축했습니다.</li>
+              <li>input compression을 median 기준 약 16배 달성해 긴 context 학습과 추론 가능성을 높였습니다.</li>
+              <li>Stage A SFT train loss 0.6776, Stage C DPO train loss 0.1680을 기록했습니다.</li>
+              <li>production 목표 지표를 validator pass rate 92% 이상, nodeId hallucination 3% 이하, contract violation 1% 이하로 정의했습니다.</li>
+              <li>PM으로 팀별 책임 경계, 비동기 작업 계약, 실시간 이벤트 UX, 비용을 고려한 zero-idle worker 전략을 설계했습니다.</li>
+              <li>AI 파트를 모델 실험으로 끝내지 않고, 데이터 계약, 검증, fallback, 리포트 산출물까지 포함한 제품 파이프라인으로 정리했습니다.</li>
+            </ul>
+          </article>
+          <div class="slot-grid">
+            <div class="slot-card"><span class="slot-label">우측 1</span><strong>Main</strong><p>테스트 대상 URL과 요구사항을 입력하는 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 2</span><strong>Analyze</strong><p>Playwright 분석 진행, 페이지별 스크린샷/이벤트 표시</p></div>
+            <div class="slot-card"><span class="slot-label">우측 3</span><strong>AI Scenario</strong><p>생성된 QA suite JSON을 사용자가 검토하는 화면</p></div>
+            <div class="slot-card"><span class="slot-label">우측 4</span><strong>Report</strong><p>실행 결과, 실패 스텝, 스크린샷, Jira 이슈화 화면</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide dark" id="closing" data-page="27">
+      <div class="slide-inner center">
+        <p class="kicker">Closing</p>
+        <h2>제가 반복해서 해온 일은 복잡한 흐름을 사용 가능한 제품으로 정리하는 것입니다.</h2>
+        <p class="lead">
+          BeBig에서는 금융 데이터를 행동으로, GBCamera에서는 현장 운영을 자동 흐름으로, Newstagram에서는 뉴스 데이터를 추천 파이프라인으로,
+          A601에서는 실시간 통신을 게임 규칙으로, 용돈농장에서는 금융 이벤트를 백엔드 도메인으로, AutoQA에서는 AI 출력을 실행 가능한 QA 시스템으로 연결했습니다.
+        </p>
+        <div class="tags">
+          <span class="tag teal">Backend 설계와 구현</span>
+          <span class="tag rose">Frontend UX 구현</span>
+          <span class="tag blue">AI 데이터/모델 파이프라인</span>
+          <span class="tag amber">PM 의사결정</span>
+          <span class="tag green">제품 완성 경험</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const deck = document.getElementById("deck");
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("slideCounter");
+    const prev = document.getElementById("prevSlide");
+    const next = document.getElementById("nextSlide");
+    const savePdf = document.getElementById("savePdf");
+
+    function currentIndex() {
+      const x = deck.scrollLeft;
+      const width = window.innerWidth;
+      return Math.min(slides.length - 1, Math.max(0, Math.round(x / width)));
+    }
+
+    function updateCounter() {
+      const index = currentIndex();
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      history.replaceState(null, "", `#${slides[index].id}`);
+    }
+
+    function goTo(index) {
+      const safeIndex = Math.min(slides.length - 1, Math.max(0, index));
+      slides[safeIndex].scrollIntoView({ behavior: "smooth", inline: "start" });
+    }
+
+    prev.addEventListener("click", () => goTo(currentIndex() - 1));
+    next.addEventListener("click", () => goTo(currentIndex() + 1));
+    savePdf.addEventListener("click", () => window.print());
+    deck.addEventListener("scroll", () => window.requestAnimationFrame(updateCounter));
+    window.addEventListener("resize", updateCounter);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown") goTo(currentIndex() + 1);
+      if (event.key === "ArrowLeft" || event.key === "PageUp") goTo(currentIndex() - 1);
+      if (event.key === "Home") goTo(0);
+      if (event.key === "End") goTo(slides.length - 1);
+    });
+
+    document.querySelectorAll(".nav-links a, .project-index a").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href").slice(1);
+        const targetIndex = slides.findIndex((slide) => slide.id === id);
+        if (targetIndex >= 0) {
+          event.preventDefault();
+          goTo(targetIndex);
+        }
+      });
+    });
+
+    updateCounter();
+  </script>
+</body>
+</html>
