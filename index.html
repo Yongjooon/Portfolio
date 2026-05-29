@@ -232,6 +232,44 @@
     }
 
     /* ============================================================
+       Click Zones — 데스크톱: 화면 좌/우 클릭으로 페이지 이동
+       ============================================================ */
+    .nav-zone {
+      position: fixed;
+      top: var(--nav-h);
+      bottom: 0;
+      width: 70px;
+      background: transparent;
+      cursor: pointer;
+      z-index: 60;
+      border: none;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      transition: color 0.2s, background 0.2s, width 0.2s;
+    }
+    .nav-zone--left { left: 0; }
+    .nav-zone--right { right: 0; }
+    .nav-zone:hover {
+      color: rgba(255, 255, 255, 0.85);
+      width: 84px;
+    }
+    .nav-zone--left:hover {
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, transparent 100%);
+    }
+    .nav-zone--right:hover {
+      background: linear-gradient(-90deg, rgba(0, 0, 0, 0.35) 0%, transparent 100%);
+    }
+    .nav-zone:disabled {
+      opacity: 0.3;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* ============================================================
        5. DECK — 좌우 스크롤 캔버스 (screen only)
        ============================================================ */
     .deck {
@@ -1080,6 +1118,315 @@
       color: white;
       font-weight: var(--fw-m);
     }
+
+    /* ============================================================
+       MOBILE — 반응형 (768px 이하, 데스크톱은 영향 없음)
+       가로 스와이프로 페이지 넘기기 (각 페이지가 풀뷰포트)
+       ============================================================ */
+    @media screen and (max-width: 768px) {
+      :root {
+        --nav-h: 52px;
+      }
+
+      body {
+        background: #1a2030;
+        overflow: hidden;
+        min-width: 0;
+      }
+
+      /* ----- Nav: 컴팩트, PDF 버튼만 ----- */
+      .nav {
+        padding: 0 12px;
+        gap: 8px;
+      }
+      .nav__brand {
+        min-width: auto;
+        font-size: 13px;
+      }
+      .nav__brand span { display: none; }
+      .nav__brand strong { width: 28px; height: 28px; font-size: 11px; }
+      .nav__links { display: none; }
+      .nav__actions { margin-left: auto; gap: 6px; }
+      .btn { padding: 7px 14px; font-size: 12px; }
+
+      /* ----- Click zones는 모바일에서 숨김 (스와이프로 대체) ----- */
+      .nav-zone { display: none; }
+
+      /* ----- Deck: 가로 스와이프 (데스크톱과 동일 방향) ----- */
+      .deck {
+        flex-direction: row;
+        align-items: stretch;
+        overflow-x: auto;
+        overflow-y: hidden;
+        height: calc(100vh - var(--nav-h));
+        margin-top: var(--nav-h);
+        padding: 0;
+        gap: 0;
+        scroll-snap-type: x mandatory;
+        scroll-snap-stop: always;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* ----- Page: 풀뷰포트, A4 고정 해제 ----- */
+      .page {
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: calc(100vh - var(--nav-h));
+        margin: 0;
+        padding: 18px 16px;
+        zoom: 1 !important;
+        box-shadow: none;
+        border-radius: 0;
+        scroll-snap-align: center;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        gap: 12px;
+      }
+
+      .page-head {
+        font-size: 9px;
+        padding-bottom: 9px;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .page-head__brand { gap: 6px; }
+      .page-foot {
+        font-size: 9px;
+        padding-top: 8px;
+        gap: 4px;
+        flex-wrap: wrap;
+      }
+
+      /* ----- Typography ----- */
+      .hero {
+        font-size: 26px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.3px !important;
+      }
+      .h1 {
+        font-size: 20px !important;
+        line-height: 1.3 !important;
+      }
+      .h2 { font-size: 15px; }
+      .h3 { font-size: 13.5px; }
+      .body, .body--lg { font-size: 13.5px; line-height: 1.7; }
+      .small { font-size: 11.5px; }
+      .kicker {
+        font-size: 11px;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+      .kicker::before { width: 18px; height: 1.5px; }
+      .bullets { gap: 6px; }
+      .bullets > li {
+        font-size: 12.5px;
+        line-height: 1.6;
+        padding-left: 14px;
+      }
+      .bullets > li::before { width: 5px; height: 5px; top: 7px; }
+      .chips { gap: 5px; }
+      .chip { padding: 4px 9px; font-size: 11px; }
+
+      /* ----- Cover page ----- */
+      .cover-layout {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        align-items: stretch;
+      }
+      .cover-text { gap: 12px; }
+      .cover-text .hero { max-width: 100%; }
+      .cover-text .lead {
+        font-size: 13px;
+        line-height: 1.6;
+        max-width: 100%;
+      }
+      .cover-text .lead br { display: none; }
+      .cover-text .hero br { display: none; }
+      .cover-photo {
+        width: 170px;
+        max-height: 230px;
+        justify-self: center;
+        aspect-ratio: 3 / 4;
+      }
+      .proof-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .proof-tile { padding: 11px; }
+      .proof-tile strong { font-size: 13px; }
+      .proof-tile span { font-size: 10.5px; line-height: 1.45; }
+
+      /* ----- About page ----- */
+      .about-layout { gap: 12px; }
+      .strength-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .about-layout .strength-card { padding: 14px; }
+      .about-layout .strength-card__num { font-size: 13px; }
+      .about-layout .strength-card h3 {
+        font-size: 14px;
+        padding-bottom: 8px;
+      }
+      .about-layout .strength-card .body {
+        font-size: 12px;
+        line-height: 1.65;
+      }
+      .cred-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .about-layout .cred-block { padding: 14px; }
+      .about-layout .cred-block h2 { font-size: 14px; }
+      .about-layout .timeline-item time { font-size: 10px; }
+      .about-layout .timeline-item strong { font-size: 13px; }
+      .about-layout .timeline-item span { font-size: 11px; }
+      .about-layout .award-list li {
+        font-size: 12px;
+        padding-left: 22px;
+      }
+      .about-layout .award-list li::before {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+      }
+      .about-layout .metric-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .about-layout .metric-tile {
+        padding: 12px;
+        min-height: 0;
+      }
+      .about-layout .metric-tile strong { font-size: 22px; }
+      .about-layout .metric-tile span { font-size: 10.5px; }
+
+      /* ----- Project map (6 cards) ----- */
+      .project-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        gap: 10px;
+      }
+      .project-card {
+        padding: 14px 16px;
+        gap: 8px;
+        min-height: 0;
+      }
+      .project-card__title { font-size: 16px; }
+      .project-card__type { font-size: 12px; }
+      .project-card__num { font-size: 10px; }
+      .project-card__meta { gap: 5px; padding-top: 8px; }
+      .project-card__meta-row {
+        grid-template-columns: 52px 1fr;
+        font-size: 11px;
+        gap: 8px;
+      }
+      .project-card__meta-row b { font-size: 9px; }
+
+      /* ----- Project cover ----- */
+      .proj-cover-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        align-items: start;
+      }
+      .proj-cover-text { gap: 12px; }
+      .proj-cover-text .hero {
+        font-size: 18px !important;
+        line-height: 1.3 !important;
+      }
+      .proj-overview {
+        font-size: 12.5px;
+        line-height: 1.7;
+        max-width: 100%;
+      }
+      .proj-cover-image,
+      .proj-cover-image--single {
+        width: 100% !important;
+        max-width: 240px !important;
+        max-height: none !important;
+        aspect-ratio: 2 / 3;
+        height: auto !important;
+        justify-self: center !important;
+        align-self: center !important;
+      }
+      .work-list { gap: 6px; }
+      .work-list li {
+        padding: 8px 12px;
+        font-size: 11px;
+        gap: 8px;
+      }
+      .work-list li strong {
+        font-size: 9.5px;
+        min-width: 38px;
+      }
+
+      /* ----- STAR page (16개) ----- */
+      .star-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas:
+          "s"
+          "t"
+          "a"
+          "r"
+          "tech";
+        gap: 9px;
+      }
+      .star-box {
+        padding: 12px 14px;
+        gap: 7px;
+        border-left-width: 0.6mm;
+      }
+      .star-box__label {
+        font-size: 9px;
+        letter-spacing: 1px;
+      }
+      .star-box__subtitle {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .star-box .bullets > li {
+        font-size: 11.5px;
+        line-height: 1.55;
+      }
+      .star-box--a .bullets {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 5px;
+      }
+      .tech-strip { padding: 9px 14px; }
+      .tech-strip strong { font-size: 9px; }
+      .tech-strip span { font-size: 11px; line-height: 1.5; }
+
+      /* ----- Closing page ----- */
+      .closing-layout {
+        gap: 16px;
+        padding: 8px 0;
+        max-width: 100%;
+      }
+      .closing-layout .hero {
+        font-size: 22px !important;
+      }
+      .closing-layout .hero br { display: none; }
+      .closing-layout .lead {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .closing-meta {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .closing-meta__item { padding: 10px 14px; }
+      .closing-meta__item strong { font-size: 9px; }
+      .closing-meta__item span { font-size: 12px; }
+
+      /* ----- 미세 조정 ----- */
+      .title-block { gap: 4px; }
+      .body-copy { font-size: 13px; line-height: 1.65; }
+    }
   </style>
 </head>
 
@@ -1105,12 +1452,19 @@
       <a href="#closing">Closing</a>
     </nav>
     <div class="nav__actions">
-      <button class="btn btn--ghost" id="prev-btn" aria-label="이전 페이지">‹</button>
-      <span class="counter" id="counter">1 / 26</span>
-      <button class="btn btn--ghost" id="next-btn" aria-label="다음 페이지">›</button>
       <button class="btn btn--primary" id="pdf-btn">PDF</button>
     </div>
   </header>
+
+  <!-- ============================================================
+       Click zones (desktop only) — 화면 좌/우 클릭으로 페이지 이동
+       ============================================================ -->
+  <button class="nav-zone nav-zone--left no-print" id="zone-left" type="button" aria-label="이전 페이지">
+    <span aria-hidden="true">‹</span>
+  </button>
+  <button class="nav-zone nav-zone--right no-print" id="zone-right" type="button" aria-label="다음 페이지">
+    <span aria-hidden="true">›</span>
+  </button>
 
   <main class="deck">
 
@@ -2684,10 +3038,9 @@
     // ============================================================
     const deck = document.querySelector('.deck');
     const pages = Array.from(document.querySelectorAll('.page'));
-    const counter = document.getElementById('counter');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
     const pdfBtn = document.getElementById('pdf-btn');
+    const zoneLeft = document.getElementById('zone-left');
+    const zoneRight = document.getElementById('zone-right');
     const navLinks = Array.from(document.querySelectorAll('.nav__links a'));
 
     // 페이지 번호 자동 설정 (페이지 순서 기준)
@@ -2698,15 +3051,36 @@
       if (num) num.textContent = `${String(i + 1).padStart(2, '0')} / ${totalStr}`;
     });
 
-    // 화면 크기에 맞춰 페이지 스케일 조정
+    // 각 페이지가 속한 섹션 ID 미리 계산
+    // (id가 없는 페이지는 직전 id 있는 페이지의 섹션을 따라감 — STAR 페이지 → 프로젝트 표지)
+    const pageSections = (() => {
+      const sections = [];
+      let currentSection = null;
+      pages.forEach(page => {
+        if (page.id) currentSection = page.id;
+        sections.push(currentSection);
+      });
+      return sections;
+    })();
+
+    // 모바일 여부
+    function isMobile() {
+      return window.matchMedia('(max-width: 768px)').matches;
+    }
+
+    // 화면 크기에 맞춰 페이지 스케일 조정 (데스크톱만)
     function updateScale() {
+      if (isMobile()) {
+        document.documentElement.style.setProperty('--screen-scale', 1);
+        return;
+      }
       const navH = 56;
       const verticalPad = 32;
       const horizontalPad = 80;
       const availH = window.innerHeight - navH - verticalPad;
       const availW = window.innerWidth - horizontalPad;
-      const pageW = 297 * 96 / 25.4; // mm → px (≈1122)
-      const pageH = 210 * 96 / 25.4; // mm → px (≈794)
+      const pageW = 297 * 96 / 25.4;
+      const pageH = 210 * 96 / 25.4;
       const scale = Math.min(availW / pageW, availH / pageH, 1);
       document.documentElement.style.setProperty('--screen-scale', scale);
     }
@@ -2723,7 +3097,6 @@
       return closest;
     }
 
-    // 페이지 이동
     function goTo(idx) {
       idx = Math.max(0, Math.min(pages.length - 1, idx));
       pages[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
@@ -2739,22 +3112,25 @@
       return false;
     }
 
-    // 카운터 + 활성 nav 링크 업데이트
+    // 활성 nav 링크 + URL 해시 갱신, 좌/우 zone 활성 상태
     function updateState() {
       const idx = currentIndex();
-      counter.textContent = `${idx + 1} / ${total}`;
-      const currentId = pages[idx].id;
+      const sectionId = pageSections[idx];
       navLinks.forEach(a => {
-        a.classList.toggle('is-active', a.getAttribute('href') === '#' + currentId);
+        a.classList.toggle('is-active', a.getAttribute('href') === '#' + sectionId);
       });
-      // URL 해시 업데이트 (히스토리에 쌓이지 않게 replaceState)
-      if (currentId) history.replaceState(null, '', '#' + currentId);
+      if (sectionId) history.replaceState(null, '', '#' + sectionId);
+      // zone 비활성 처리 (첫/마지막 페이지에서)
+      if (zoneLeft) zoneLeft.disabled = (idx === 0);
+      if (zoneRight) zoneRight.disabled = (idx === pages.length - 1);
     }
 
     // 이벤트 바인딩
-    prevBtn.addEventListener('click', () => goTo(currentIndex() - 1));
-    nextBtn.addEventListener('click', () => goTo(currentIndex() + 1));
     pdfBtn.addEventListener('click', () => window.print());
+
+    // 화면 좌/우 클릭으로 이동 (데스크톱)
+    if (zoneLeft) zoneLeft.addEventListener('click', () => goTo(currentIndex() - 1));
+    if (zoneRight) zoneRight.addEventListener('click', () => goTo(currentIndex() + 1));
 
     deck.addEventListener('scroll', () => {
       window.requestAnimationFrame(updateState);
@@ -2772,7 +3148,7 @@
       jumpToHash('#cover');
     });
 
-    // 키보드 단축키
+    // 키보드 단축키 (데스크톱 보조)
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
       if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
@@ -2801,7 +3177,6 @@
     updateScale();
     setTimeout(() => {
       if (location.hash && jumpToHash(location.hash)) {
-        // hash로 이동 후 상태 갱신
         setTimeout(updateState, 200);
       } else {
         updateState();
