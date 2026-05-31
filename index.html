@@ -1770,7 +1770,7 @@
         <div class="star-layout">
           <div class="star-box star-box--s">
             <span class="star-box__label">상황 · Situation</span>
-            <h3 class="star-box__subtitle">실제 금융 데이터는 서비스의 출발점이지만,<br> 외부 API 응답을 그대로 쓰기 어려웠습니다.</h3>
+            <h3 class="star-box__subtitle">실제 금융 데이터는 서비스의 출발점이지만, 외부 API 응답을 <br>그대로 쓰기 어려웠습니다.</h3>
             <ul class="bullets">
               <li>계좌 연결은 은행 인증, CODEF 연결 ID, 계좌 목록, 거래내역 조회가 순차적으로 이어지는 민감한 흐름이었습니다.</li>
               <li>사용자는 빠른 결과를 기대하지만 외부 금융 API는 응답 지연, 빈 거래내역, 기존 연결 ID 재사용 같은 예외가 발생할 수 있었습니다.</li>
@@ -1789,11 +1789,11 @@
             <h3 class="star-box__subtitle">Vue 요청 흐름과 Spring/MyBatis 저장 흐름이 같은 데이터 계약을 바라보도록 설계했습니다.</h3>
             <ul class="bullets">
               <li>Vue·Axios 기반 계좌 추가 요청은 선택 은행·인증 정보·사용자 식별 값을 Backend로 전달하고, Backend는 연결 ID 보유 여부에 따라 신규 등록 또는 기존 연결 ID 확장으로 분기했습니다.</li>
-              <li>CODEF 계좌 응답은 은행 코드·계좌번호·계좌명·잔액·통화·계좌 상태처럼 필요한 필드만 추려 내부 계좌 모델로 변환했습니다.</li>
-              <li>MyBatis batch insert로 여러 계좌를 한 번에 저장하고, 계좌별로 최근 360일 거래내역 조회를 이어 실행하도록 흐름을 잡았습니다.</li>
-              <li>거래내역은 거래일시·거래처·입출금·금액·잔액·계좌번호 기준으로 정규화해 대시보드와 상세 화면이 같은 의미의 필드를 사용하게 했습니다.</li>
+              <li>CODEF 계좌 응답은 은행 코드·계좌번호·계좌명·잔액·통화·계좌 상태처럼 필요한 필드만 추려 <br>내부 계좌 모델로 변환했습니다.</li>
+              <li>MyBatis batch insert로 여러 계좌를 한 번에 저장하고, 계좌별로 최근 360일 거래내역 조회를 <br>이어 실행하도록 흐름을 잡았습니다.</li>
+              <li>거래내역은 거래일시·거래처·입출금·금액·잔액·계좌번호 기준으로 정규화해 대시보드와 상세 화면이<br> 같은 의미의 필드를 사용하게 했습니다.</li>
               <li>거래일자와 금액 중심의 중복 판단 기준으로 동일 거래가 반복 저장되지 않게 처리했습니다.</li>
-              <li>거래내역이 없는 계좌는 현재 잔액 기반 초기 표시용 거래를 생성해 총자산·상세 화면이 빈 상태로 끊기지 않도록 했습니다.</li>
+              <li>거래내역이 없는 계좌는 현재 잔액 기반 초기 표시용 거래를 생성해 총자산·상세 화면이 빈 상태로<br> 끊기지 않도록 했습니다.</li>
             </ul>
           </div>
           <div class="star-box star-box--r">
@@ -1855,7 +1855,7 @@
               <li>대시보드·은행 추가·은행 인증·계좌 목록·계좌 상세·설문·미션 화면을 목적별 페이지로 나누고<br> 라우팅 흐름을 단순화했습니다.</li>
               <li>Pinia에는 사용자 상태·선택 은행·계좌 연결 진행 상태를 저장하고, Axios API 모듈은 서버 통신과<br> 인증 헤더 처리를 담당하도록 분리했습니다.</li>
               <li>홈 대시보드는 사용자 정보·총자산·대표 계좌·계좌 연결 CTA·미션 요약을 한 화면에 배치해 <br>"현재 상태"와 "다음 행동"이 같이 보이게 구성했습니다.</li>
-              <li>계좌 상세는 현재 페이지·페이지 크기·전체 페이지·요청 중 상태·추가 데이터 여부를 분리해 무한 스크롤과 중복 요청 방지를 함께 처리했습니다.</li>
+              <li>계좌 상세는 현재 페이지·페이지 크기·전체 페이지·요청 중 상태·추가 데이터 여부를 분리해<br> 무한 스크롤과 중복 요청 방지를 함께 처리했습니다.</li>
               <li>거래내역은 Vue computed 기반 날짜 그룹핑으로 같은 날짜의 소비를 묶고, 목록이 길어져도 <br>흐름을 읽을 수 있게 했습니다.</li>
               <li>새로고침 버튼은 CODEF 재조회 이후 페이지 상태를 초기화하고 최신 거래부터 다시 보여줘<br> 데이터 갱신 감각을 제공했습니다.</li>
             </ul>
@@ -2040,7 +2040,7 @@
           </div>
           <div class="tech-strip">
             <strong>Tech Stack</strong>
-            <span>Electron IPC · Preload bridge · BrowserWindow · silent print · deviceName · localStorage · Canvas image data URL</span>
+            <span>Electron IPC · Preload bridge · BrowserWindow · silent print · deviceName · localStorage ·<br> Canvas image data URL</span>
           </div>
         </div>
       </div>
@@ -2104,7 +2104,7 @@
           </div>
           <div class="tech-strip">
             <strong>Tech Stack</strong>
-            <span>React Router · Zustand · MediaStream · Canvas crop · JPEG Blob · QR flow · photobooth service design</span>
+            <span>React Router · Zustand · MediaStream · Canvas crop · JPEG Blob · QR flow ·<br> photobooth service design</span>
           </div>
         </div>
       </div>
@@ -2363,7 +2363,7 @@
         <div class="proj-cover-layout">
           <div class="proj-cover-text">
             <span class="kicker">04 · Project A601</span>
-            <h1 class="hero" style="font-size: 22pt; color: white;">WebRTC와 WebSocket을 결합한 AI 판결 기반 실시간 마피아 게임</h1>
+            <h1 class="hero" style="font-size: 22pt; color: white;">WebRTC와 WebSocket을 결합한<br> AI 판결 기반 실시간 마피아 게임</h1>
             <p class="proj-overview">Project A601은 SF 세계관의 실시간 마피아 게임입니다. LiveKit WebRTC로 영상/음성 대화를 제공하고, STOMP WebSocket으로 방 상태·게임 페이즈·직업 능력·사망·AI 판결 결과를 동기화했습니다.<br> 저는 PM과 Frontend를 맡아 게임 루프·반응형 인게임 UX·LiveKit 권한 제어·STOMP 이벤트 상태 관리를 설계했고, 특히 게임이 처음부터 끝까지 끊기지 않도록 서버 이벤트와 클라이언트 연출 사이의 완충 구조를 만들었습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">React</span>
@@ -2727,7 +2727,7 @@
             <span class="star-box__label">행동 · Action</span>
             <h3 class="star-box__subtitle">QueryDSL Custom Repository로 조회 책임을 분리하고 복합 커서를 설계했습니다.</h3>
             <ul class="bullets">
-              <li>JPAQueryFactory를 중심으로 복잡 조회 전용 Custom Repository를 구성해 단순 CRUD와 동적 조회 책임을 분리했습니다.</li>
+              <li>JPAQueryFactory를 중심으로 복잡 조회 전용 Custom Repository를 구성해 단순 CRUD와 <br>동적 조회 책임을 분리했습니다.</li>
               <li>상품 목록은 Projection DTO로 바로 조회하고, 자녀의 현재 신용점수와 상품 최소 신용점수를 비교하는 subquery로 가입 가능 여부를 계산했습니다.</li>
               <li>QueryDSL CaseBuilder를 사용해 가입 가능 상품을 먼저 보여주고, 같은 그룹 안에서는<br> 최신 상품 순으로 정렬했습니다.</li>
               <li>현재 ACTIVE 상태로 가입 중인 자녀 상품은 not exists subquery로 제외해 중복 가입 가능성이 화면에 노출되지 않게 했습니다.</li>
