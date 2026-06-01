@@ -988,9 +988,13 @@
     .proj-overview {
       font-size: 9pt;
       line-height: 1.7;
-      color: #cbd5e1;
+      color: #94a3b8;
       max-width: 150mm;
       word-break: keep-all;
+    }
+    .proj-overview b {
+      color: var(--c-accent-2);
+      font-weight: var(--fw-x);
     }
     .work-list { display: grid; gap: 2mm; }
     .work-list li {
@@ -1727,7 +1731,7 @@
               <div class="project-card__meta-row"><b>유형</b><span>URL 분석·AI 시나리오·Playwright 실행</span></div>
               <div class="project-card__meta-row"><b>기간</b><span>2026.04.06 ~ 2026.06.02</span></div>
               <div class="project-card__meta-row"><b>인원</b><span>6명</span></div>
-              <div class="project-card__meta-row"><b>업무</b><span>PM, AI 데이터 구축, SFT/DPO 학습, 추론 구조 설계</span></div>
+              <div class="project-card__meta-row"><b>업무</b><span>PM, AI 데이터 구축, SFT/DPO 학습</span></div>
               <div class="project-card__meta-row"><b>성과</b><span>SSAFY 자율프로젝트 우수상</span></div>
             </div>
           </article>
@@ -1754,7 +1758,7 @@
           <div class="proj-cover-text">
             <span class="kicker">01 · BeBig</span>
             <h1 class="hero" style="font-size: 24pt; color: white;">실제 계좌 데이터를 소비 습관 개선 행동으로 연결한 금융 자산관리 서비스</h1>
-            <p class="proj-overview">BeBig은 사용자의 실제 계좌와 거래내역을 기반으로 총자산, 소비 흐름, 금융 성향, 미션을 제공하는 금융 자산관리 서비스입니다. 단순히 잔액과 거래 목록을 보여주는 데서 끝나지 않고, CODEF로 가져온 금융 데이터를 사용자가 오늘 수행할 수 있는 저축/소비 행동으로 번역하는 것을 목표로 했습니다. 저는 PM과 Frontend를 맡아 계좌 연결 UX, 대시보드, 거래내역 조회, 미션 흐름을 설계·구현하고 Backend의 CODEF 수집 구조를 함께 정리했습니다.</p>
+            <p class="proj-overview">BeBig은 사용자의 <b>실제 계좌와 거래내역</b>을 기반으로 총자산, 소비 흐름, 금융 성향, 미션을 제공하는 <b>금융 자산관리 서비스</b>입니다. 단순히 잔액과 거래 목록을 보여주는 데서 끝나지 않고, <b>CODEF</b>로 가져온 금융 데이터를 사용자가 오늘 수행할 수 있는 저축/소비 행동으로 번역하는 것을 목표로 했습니다. 저는 <b>PM</b>과 <b>Frontend</b>를 맡아 계좌 연결 UX, 대시보드, 거래내역 조회, 미션 흐름을 설계·구현하고 Backend의 <b>CODEF 수집 구조</b>를 함께 정리했습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">Vue 3</span>
               <span class="chip chip--accent">Pinia</span>
@@ -1929,7 +1933,7 @@
           <div class="proj-cover-text">
             <span class="kicker">02 · GBCamera</span>
             <h1 class="hero" style="font-size: 22pt; color: white;">촬영부터 무인 출력과 QR 공유까지 자동화한<br> 현장 운영형 포토부스</h1>
-            <p class="proj-overview">GBCamera는 행사 현장에서 참가자가 직접 촬영·사진 선택·프레임 적용·출력·QR 다운로드까지 진행할 수 있도록 만든 포토부스 자동화 서비스입니다. 웹캠과 프린터를 제어해야 하는 운영 앱은 Electron으로 구성하고,<br> 참가자 결과 확인은 모바일 웹으로 분리했습니다. 저는 기획·Frontend·Backend·Electron·배포·현장 운영을 <br>모두 담당하며 브라우저 UI와 로컬 장치 제어·서버 저장·모바일 QR 공유 흐름을 하나로 연결했습니다.</p>
+            <p class="proj-overview">GBCamera는 행사 현장에서 참가자가 직접 촬영·사진 선택·프레임 적용·출력·QR 다운로드까지 진행할 수 있도록 만든 <b>포토부스 자동화 서비스</b>입니다. 웹캠과 프린터를 제어해야 하는 운영 앱은 <b>Electron</b>으로 구성하고,<br> 참가자 결과 확인은 <b>모바일 웹</b>으로 분리했습니다. 저는 <b>기획·Frontend·Backend·Electron·배포·현장 운영</b>을 <br>모두 담당하며 브라우저 UI와 로컬 장치 제어·서버 저장·모바일 QR 공유 흐름을 하나로 연결했습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">React</span>
               <span class="chip chip--accent">Zustand</span>
@@ -2174,7 +2178,7 @@
           <div class="proj-cover-text">
             <span class="kicker">03 · Newstagram</span>
             <h1 class="hero" style="font-size: 22pt; color: white;">RSS 수집과 기사 임베딩으로 관심사 기반 뉴스를 제공한 AI 큐레이션 서비스</h1>
-            <p class="proj-overview">Newstagram은 여러 언론사의 RSS 기사를 자동 수집하고, 기사 임베딩과 클러스터링을 통해 실시간/일간/주간 이슈와 개인화 추천을 제공하는 뉴스 서비스입니다. 단순 키워드가 아니라 의미 기반 벡터를 사용해 비슷한 이슈와 사용자의 관심사를 연결했습니다. 저는 PM·Backend·Frontend를 담당하며 RSS 수집·Spring Batch/Quartz 자동화·기사 임베딩 저장·추천/검색 화면 연결까지 이어지는 데이터 파이프라인을 설계했습니다.</p>
+            <p class="proj-overview">Newstagram은 여러 언론사의 <b>RSS 기사를 자동 수집</b>하고, 기사 <b>임베딩</b>과 <b>클러스터링</b>을 통해 실시간/일간/주간 이슈와 개인화 추천을 제공하는 뉴스 서비스입니다. 단순 키워드가 아니라 <b>의미 기반 벡터</b>를 사용해 비슷한 이슈와 사용자의 관심사를 연결했습니다. 저는 <b>PM·Backend·Frontend</b>를 담당하며 <b>RSS 수집·Spring Batch/Quartz 자동화·기사 임베딩 저장</b>·추천/검색 화면 연결까지 이어지는 데이터 파이프라인을 설계했습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">Spring Batch</span>
               <span class="chip chip--accent">Quartz</span>
@@ -2418,7 +2422,7 @@
           <div class="proj-cover-text">
             <span class="kicker">04 · Project A601</span>
             <h1 class="hero" style="font-size: 22pt; color: white;">WebRTC와 WebSocket을 결합한<br> AI 판결 기반 실시간 마피아 게임</h1>
-            <p class="proj-overview">Project A601은 SF 세계관의 실시간 마피아 게임입니다. LiveKit WebRTC로 영상/음성 대화를 제공하고, STOMP WebSocket으로 방 상태·게임 페이즈·직업 능력·사망·AI 판결 결과를 동기화했습니다.<br> 저는 PM과 Frontend를 맡아 게임 루프·반응형 인게임 UX·LiveKit 권한 제어·STOMP 이벤트 상태 관리를 설계했고, 특히 게임이 처음부터 끝까지 끊기지 않도록 서버 이벤트와 클라이언트 연출 사이의 완충 구조를 만들었습니다.</p>
+            <p class="proj-overview">Project A601은 SF 세계관의 실시간 마피아 게임입니다. <b>LiveKit WebRTC</b>로 영상/음성 대화를 제공하고, <b>STOMP WebSocket</b>으로 방 상태·게임 페이즈·직업 능력·사망·AI 판결 결과를 동기화했습니다.<br> 저는 <b>PM</b>과 <b>Frontend</b>를 맡아 게임 루프·반응형 인게임 UX·LiveKit 권한 제어·STOMP 이벤트 상태 관리를 설계했고, 특히 게임이 처음부터 끝까지 끊기지 않도록 서버 이벤트와 클라이언트 연출 사이의 완충 구조를 만들었습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">React</span>
               <span class="chip chip--accent">TypeScript</span>
@@ -2662,7 +2666,7 @@
           <div class="proj-cover-text">
             <span class="kicker">05 · 용돈농장</span>
             <h1 class="hero" style="font-size: 22pt; color: white;">부모와 자녀가 함께 금융 행동을 경험하는 <br>청소년 금융 교육 백엔드</h1>
-            <p class="proj-overview">용돈농장은 부모가 관리하는 환경에서 자녀가 용돈·예금·적금·대출·일과 보상·신용점수를 경험하는 금융 교육 서비스입니다. 금융 행동이 단순 화면 상태가 아니라 거래 장부·상품 가입 상태·신용점수 이력으로 남도록 설계하는 것이 중요했습니다. 저는 Backend를 담당하며 DB 설계·도메인 모델링·QueryDSL 복잡 조회 API를 구현했고, 특히 부모-자녀 관계·상품 가입 가능 여부·신용점수·대출 상환 상태처럼 조건이 많은 도메인을 JPA와 QueryDSL로 정리했습니다.</p>
+            <p class="proj-overview">용돈농장은 부모가 관리하는 환경에서 자녀가 용돈·예금·적금·대출·일과 보상·신용점수를 경험하는 <b>금융 교육 서비스</b>입니다. 금융 행동이 단순 화면 상태가 아니라 거래 장부·상품 가입 상태·신용점수 이력으로 남도록 설계하는 것이 중요했습니다. 저는 <b>Backend</b>를 담당하며 <b>DB 설계·도메인 모델링·QueryDSL 복잡 조회 API</b>를 구현했고, 특히 부모-자녀 관계·상품 가입 가능 여부·신용점수·대출 상환 상태처럼 조건이 많은 도메인을 <b>JPA</b>와 <b>QueryDSL</b>로 정리했습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">Spring Boot</span>
               <span class="chip chip--accent">JPA</span>
@@ -2838,7 +2842,7 @@
           <div class="proj-cover-text">
             <span class="kicker">06 · AutoQA</span>
             <h1 class="hero" style="font-size: 22pt; color: white;">웹 분석 결과를 실행 가능한 QA 시나리오로<br> 바꾸는 AI 테스트 자동화 플랫폼</h1>
-            <p class="proj-overview">AutoQA는 URL을 분석해 웹 페이지의 액션 후보와 흐름을 추출하고, AI가 Playwright로 실행 가능한 QA suite JSON을 생성하며, 실제 브라우저 실행 결과를 리포트로 제공하는 플랫폼입니다. 핵심은 "그럴듯한 테스트 설명"이 아니라 validator와 실행기가 통과할 수 있는 구조화 JSON을 만드는 것이었습니다. 저는 PM과 AI 파트를 맡아 학습용 데이터셋 구축·SFT/DPO 학습·Qwen3-8B 기반 모델 개선·vLLM 추론 환경과 JSON 검증 구조를 설계했습니다.</p>
+            <p class="proj-overview">AutoQA는 URL을 분석해 웹 페이지의 액션 후보와 흐름을 추출하고, <b>AI가 Playwright로 실행 가능한 QA suite JSON을 생성</b>하며, 실제 브라우저 실행 결과를 리포트로 제공하는 플랫폼입니다. 핵심은 "그럴듯한 테스트 설명"이 아니라 validator와 실행기가 통과할 수 있는 구조화 JSON을 만드는 것이었습니다. 저는 <b>PM</b>과 <b>AI 파트</b>를 맡아 학습용 <b>데이터셋 구축·SFT/DPO 학습·Qwen3-8B 기반 모델 개선·vLLM 추론 환경과 JSON 검증 구조를 설계</b>했습니다.</p>
             <div class="chips">
               <span class="chip chip--accent">Qwen3-8B</span>
               <span class="chip chip--accent">LoRA</span>
