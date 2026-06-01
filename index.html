@@ -393,6 +393,22 @@
     .page--dark .kicker::before { background: var(--c-accent-2); }
 
     .title-block { display: grid; gap: 2.5mm; }
+    .title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8mm;
+    }
+    .title-row .h1 { flex: 0 1 auto; }
+    .title-tech {
+      flex: 0 1 auto;
+      text-align: right;
+      font-size: var(--fs-small);
+      color: var(--c-text-2);
+      line-height: 1.5;
+      font-weight: var(--fw-m);
+      white-space: nowrap;
+    }
 
     /* ============================================================
        7. COMPONENTS
@@ -995,7 +1011,7 @@
       grid-template-areas:
         "s t"
         "a a"
-        "r tech";
+        "r r";
       gap: 3.5mm;
       height: 100%;
     }
@@ -1764,7 +1780,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">01 BeBig · Work 1</span>
-          <h1 class="h1">CODEF 금융 데이터 활용 구조 설계</h1>
+          <div class="title-row">
+            <h1 class="h1">CODEF 금융 데이터 활용 구조 설계</h1>
+            <span class="title-tech">Vue 3 · Axios · Spring Boot · CODEF API · MyBatis batch insert · 금융 데이터 정규화 · 거래내역 중복 방지</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -1803,10 +1822,7 @@
               <li>외부 금융 API 응답을 화면 전용이 아니라 서비스 전반에서 재사용 가능한 금융 도메인 데이터로 전환했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Vue 3 · Axios · Spring Boot · CODEF API · MyBatis batch insert · 금융 데이터 정규화 · 거래내역 중복 방지</span>
-          </div>
+
         </div>
       </div>
 
@@ -1828,7 +1844,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">01 BeBig · Work 2</span>
-          <h1 class="h1">사용자 친화적 UX 구현</h1>
+          <div class="title-row">
+            <h1 class="h1">사용자 친화적 UX 구현</h1>
+            <span class="title-tech">Vue 3 · Pinia · Axios interceptor · computed grouping · infinite scroll · loading state · dashboard UX</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -1867,10 +1886,7 @@
               <li>KB IT's Your Life 종합실무프로젝트에서 BeBig 프로젝트가 <b>최우수상</b>을 수상했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Vue 3 · Pinia · Axios interceptor · computed grouping · infinite scroll · loading state · dashboard UX</span>
-          </div>
+
         </div>
       </div>
 
@@ -1935,7 +1951,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">02 GBCamera · Work 1</span>
-          <h1 class="h1">배포 운영</h1>
+          <div class="title-row">
+            <h1 class="h1">배포 운영</h1>
+            <span class="title-tech">Vercel Serverless Proxy · EC2 · Spring Boot · MySQL LONGBLOB · Base64 변환 · SecureRandom · CORS/Mixed Content 대응</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -1975,10 +1994,7 @@
               <li>현장 네트워크와 배포 프로토콜 차이로 인한 모바일 조회 실패 가능성을 줄였습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Vercel Serverless Proxy · EC2 · Spring Boot · MySQL LONGBLOB · Base64 변환 · SecureRandom · CORS/Mixed Content 대응</span>
-          </div>
+
         </div>
       </div>
 
@@ -2000,7 +2016,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">02 GBCamera · Work 2</span>
-          <h1 class="h1">Electron 무인 프린트</h1>
+          <div class="title-row">
+            <h1 class="h1">Electron 무인 프린트</h1>
+            <span class="title-tech">Electron IPC · Preload bridge · BrowserWindow · silent print · deviceName · localStorage · Canvas image data URL</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2039,10 +2058,7 @@
               <li>웹 UI의 편의성과 데스크톱 앱의 로컬 장치 제어 능력을 함께 활용했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Electron IPC · Preload bridge · BrowserWindow · silent print · deviceName · localStorage ·<br> Canvas image data URL</span>
-          </div>
+
         </div>
       </div>
 
@@ -2064,7 +2080,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">02 GBCamera · Work 3</span>
-          <h1 class="h1">수동 포토부스 자동화 기획</h1>
+          <div class="title-row">
+            <h1 class="h1">수동 포토부스 자동화 기획</h1>
+            <span class="title-tech">React Router · Zustand · MediaStream · Canvas crop · JPEG Blob · QR flow · photobooth service design</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2103,10 +2122,7 @@
               <li>운영자 설명 의존도를 줄이고 참가자가 화면 흐름을 따라 스스로 촬영을 마칠 수 있게 했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>React Router · Zustand · MediaStream · Canvas crop · JPEG Blob · QR flow ·<br> photobooth service design</span>
-          </div>
+
         </div>
       </div>
 
@@ -2171,7 +2187,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">03 Newstagram · Work 1</span>
-          <h1 class="h1">Batch · Quartz 자동화</h1>
+          <div class="title-row">
+            <h1 class="h1">Batch · Quartz 자동화</h1>
+            <span class="title-tech">Spring Batch · Quartz · ThreadPoolTaskExecutor · chunk processing · Asia/Seoul scheduler · clustering trigger</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2210,10 +2229,7 @@
               <li>실패 가능성이 높은 외부 데이터 작업을 사용자 기능과 분리해 서비스 안정성을 높였습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Spring Batch · Quartz · ThreadPoolTaskExecutor · chunk processing · Asia/Seoul scheduler · clustering trigger</span>
-          </div>
+
         </div>
       </div>
 
@@ -2235,7 +2251,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">03 Newstagram · Work 2</span>
-          <h1 class="h1">RSS 기사 수집</h1>
+          <div class="title-row">
+            <h1 class="h1">RSS 기사 수집</h1>
+            <span class="title-tech">Rome RSS · Jsoup · URL unique constraint · ON CONFLICT DO NOTHING · thumbnail extraction · text normalization</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2274,10 +2293,7 @@
               <li>중복 URL과 품질 낮은 이미지/본문이 임베딩 단계로 넘어가는 비율을 줄였습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Rome RSS · Jsoup · URL unique constraint · ON CONFLICT DO NOTHING · thumbnail extraction · <br>text normalization</span>
-          </div>
+
         </div>
       </div>
 
@@ -2299,7 +2315,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">03 Newstagram · Work 3</span>
-          <h1 class="h1">기사 임베딩 파이프라인</h1>
+          <div class="title-row">
+            <h1 class="h1">기사 임베딩 파이프라인</h1>
+            <span class="title-tech">OpenAI text-embedding-3-large · dimensions=1536 · pgvector · batch embedding · response validation · semantic search</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2338,10 +2357,7 @@
               <li><b>1536차원</b> 기사 임베딩을 pgvector에 저장해 검색과 추천 기능의 핵심 데이터로 재사용했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>OpenAI text-embedding-3-large · dimensions=1536 · pgvector · batch embedding · <br>response validation · semantic search</span>
-          </div>
+
         </div>
       </div>
 
@@ -2406,7 +2422,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">04 Project A601 · Work 1</span>
-          <h1 class="h1">PM · 게임 루프 설계 및 몰입형 반응형 UX</h1>
+          <div class="title-row">
+            <h1 class="h1">PM · 게임 루프 설계 및 몰입형 반응형 UX</h1>
+            <span class="title-tech">React · TypeScript · Zustand · state machine · ResizeObserver · responsive game board · stage transition UX</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2445,10 +2464,7 @@
               <li>SSAFY 공통프로젝트에서 A601 프로젝트가 <b>우수상</b>을 수상했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>React · TypeScript · Zustand · state machine · ResizeObserver · responsive game board · <br>stage transition UX</span>
-          </div>
+
         </div>
       </div>
 
@@ -2470,7 +2486,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">04 Project A601 · Work 2</span>
-          <h1 class="h1">LiveKit WebRTC 권한 제어</h1>
+          <div class="title-row">
+            <h1 class="h1">LiveKit WebRTC 권한 제어</h1>
+            <span class="title-tech">LiveKit · WebRTC · local publish control · media publication · deviceId switching · remote audio subscription · dead-user guard</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2509,10 +2528,7 @@
               <li>사망자 관전·밤 페이즈·AI 판결 연출처럼 복잡한 상황에서도 미디어 권한이 게임 규칙과 맞게 동작했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>LiveKit · WebRTC · local publish control · media publication · deviceId switching · <br>remote audio subscription · dead-user guard</span>
-          </div>
+
         </div>
       </div>
 
@@ -2534,7 +2550,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">04 Project A601 · Work 3</span>
-          <h1 class="h1">STOMP WebSocket · 상태관리</h1>
+          <div class="title-row">
+            <h1 class="h1">STOMP WebSocket · 상태관리</h1>
+            <span class="title-tech">STOMP · SockJS · topic subscription Map · Zustand slice · reconnect delay · event-driven UI · role action publish</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2573,10 +2592,7 @@
               <li>방 상태·개인 역할·게임 페이즈·직업 능력 결과가 각 플레이어 화면에 맞게 반영되었습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>STOMP · SockJS · topic subscription Map · Zustand slice · reconnect delay · event-driven UI · <br>role action publish</span>
-          </div>
+
         </div>
       </div>
 
@@ -2640,7 +2656,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">05 용돈농장 · Work 1</span>
-          <h1 class="h1">DB 설계 · 도메인 모델링</h1>
+          <div class="title-row">
+            <h1 class="h1">DB 설계 · 도메인 모델링</h1>
+            <span class="title-tech">Spring Data JPA · @MapsId · @OneToOne · @ManyToOne · aggregate modeling · domain method · state transition</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2679,10 +2698,7 @@
               <li>금융 이벤트가 단순 상태 변경이 아니라 장부와 이력으로 남을 수 있는 기반을 만들었습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Spring Data JPA · @MapsId · @OneToOne · @ManyToOne · aggregate modeling · domain method ·<br> state transition</span>
-          </div>
+
         </div>
       </div>
 
@@ -2704,7 +2720,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">05 용돈농장 · Work 2</span>
-          <h1 class="h1">QueryDSL 복잡 조회 API 구현</h1>
+          <div class="title-row">
+            <h1 class="h1">QueryDSL 복잡 조회 API 구현</h1>
+            <span class="title-tech">QueryDSL · JPAQueryFactory · Projection DTO · CaseBuilder · not exists subquery · composite cursor · fetch join</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2743,10 +2762,7 @@
               <li>금융 도메인 조회를 QueryDSL로 분리해 화면 요구사항이 복잡해져도 API 응답 구조를<br> 유지할 수 있게 했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>QueryDSL · JPAQueryFactory · Projection DTO · CaseBuilder · not exists subquery · composite cursor · fetch join</span>
-          </div>
+
         </div>
       </div>
 
@@ -2811,7 +2827,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">06 AutoQA · Work 1</span>
-          <h1 class="h1">AI 모델 학습용 데이터셋 구축</h1>
+          <div class="title-row">
+            <h1 class="h1">AI 모델 학습용 데이터셋 구축</h1>
+            <span class="title-tech">SFT dataset · DPO negative pair · QA contract · strict JSON · nodeId whitelist · Playwright executable scenario</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2850,10 +2869,7 @@
               <li>모델 학습 기준을 자연어 품질이 아니라 validator 통과 가능성·실행 가능성으로 전환했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>SFT dataset · DPO negative pair · QA contract · strict JSON · nodeId whitelist · <br>Playwright executable scenario</span>
-          </div>
+
         </div>
       </div>
 
@@ -2875,7 +2891,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">06 AutoQA · Work 2</span>
-          <h1 class="h1">SFT · DPO 학습 & AI 모델 개선</h1>
+          <div class="title-row">
+            <h1 class="h1">SFT · DPO 학습 & AI 모델 개선</h1>
+            <span class="title-tech">Qwen3-8B · LoRA · QLoRA · SFT · DPO · gradient checkpointing · contract validation · mode collapse analysis</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2914,10 +2933,7 @@
               <li>Stage A SFT train loss <b>0.6776</b>, Stage C DPO train loss <b>0.1680</b>으로 학습 수렴을 추적하고, validator pass·parse fail·truncation·nodeId hallucination을 별도 평가 지표로 관리했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>Qwen3-8B · LoRA · QLoRA · SFT · DPO · gradient checkpointing · contract validation ·<br> mode collapse analysis</span>
-          </div>
+
         </div>
       </div>
 
@@ -2939,7 +2955,10 @@
       <div class="page-body">
         <div class="title-block">
           <span class="kicker">06 AutoQA · Work 3</span>
-          <h1 class="h1">추론 환경 개선</h1>
+          <div class="title-row">
+            <h1 class="h1">추론 환경 개선</h1>
+            <span class="title-tech">vLLM · LoRA adapter · prefix caching · guided JSON schema · token clamp · nodeId whitelist · validation fallback</span>
+          </div>
         </div>
 
         <div class="star-layout">
@@ -2978,10 +2997,7 @@
               <li>AI 생성 결과가 Backend validator와 Playwright 실행기로 넘어갈 수 있는 구조적 안정성을 확보했습니다.</li>
             </ul>
           </div>
-          <div class="tech-strip">
-            <strong>Tech Stack</strong>
-            <span>vLLM · LoRA adapter · prefix caching · guided JSON schema · token clamp · nodeId whitelist · validation fallback</span>
-          </div>
+
         </div>
       </div>
 
