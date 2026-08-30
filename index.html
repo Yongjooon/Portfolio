@@ -1607,12 +1607,12 @@
                 <div class="timeline-item">
                   <time>2024.05 – 2024.10</time>
                   <strong>KB IT's Your Life 5기</strong>
-                  <span>Java · Spring · Vue · 금융 프로젝트 수행</span>
+                  <span>Java · Spring · Vue · 금융 프로젝트 수행 / 우수 수료생</span>
                 </div>
                 <div class="timeline-item">
                   <time>2025.07 – 2026.06</time>
                   <strong>SSAFY 14기</strong>
-                  <span>Java · Spring · Vue · AI 실전 개발</span>
+                  <span>Java · Spring · Vue · AI 실전 개발  / 최우수 등급 수료</span>
                 </div>
               </div>
             </article>
@@ -1621,10 +1621,12 @@
               <h2>수상 · 자격 · 경험 / Awards</h2>
               <ul class="award-list">
                 <li>KB IT's Your Life 종합실무 <b>최우수상</b> : BeBig</li>
-                <li>SSAFY 1학기 <b>성적우수상</b> · 프로젝트 <b>우수상</b> : Newstagram</li>
+                <li>SSAFY 1학기 <b>성적우수상</b></li>
+                <li>SSAFY 1학기 프로젝트 <b>우수상</b> : Newstagram</li>
                 <li>SSAFY 공통프로젝트 <b>우수상</b> : A601</li>
                 <li>SSAFY 자율프로젝트 <b>우수상</b> : AutoQA</li>
                 <li>Google Analytics Certification · OPIc IM3</li>
+                <li>정보처리기사</li>
                 <li> 양천구청 행정인턴 · INU 학습멘토링 봉사활동</li>
               </ul>
             </article>
@@ -1634,7 +1636,7 @@
           <div class="metric-grid">
             <div class="metric-tile"><strong>6+</strong><span>대표 프로젝트</span></div>
             <div class="metric-tile"><strong>960h</strong><span>KB IT's Your Life 응용SW 교육</span></div>
-            <div class="metric-tile"><strong>925h</strong><span>SSAFY 1학기 코딩 집중과정</span></div>
+            <div class="metric-tile"><strong>1,628h</strong><span>삼성청년 SW·AI 아카데미 응용SW · AI 교육</span></div>
             <div class="metric-tile"><strong>5+</strong><span>수상 내역</span></div>
           </div>
         </div>
@@ -3179,10 +3181,12 @@
 
     // 현재 가운데 페이지 인덱스
     function currentIndex() {
-      const containerCenter = deck.scrollLeft + deck.clientWidth / 2;
+      const deckRect = deck.getBoundingClientRect();
+      const containerCenter = deckRect.left + deckRect.width / 2;
       let closest = 0, minDist = Infinity;
       pages.forEach((page, i) => {
-        const center = page.offsetLeft + page.offsetWidth / 2;
+        const pageRect = page.getBoundingClientRect();
+        const center = pageRect.left + pageRect.width / 2;
         const dist = Math.abs(center - containerCenter);
         if (dist < minDist) { minDist = dist; closest = i; }
       });
