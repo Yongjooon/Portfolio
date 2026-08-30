@@ -1158,92 +1158,185 @@
 
     /* ============================================================
        MOBILE — 반응형 (768px 이하, 데스크톱은 영향 없음)
-       가로 스와이프로 페이지 넘기기 (각 페이지가 풀뷰포트)
+       세로 문서형 레이아웃 + 섹션 바로가기
        ============================================================ */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 768px),
+           screen and (max-width: 950px) and (max-height: 520px) {
       :root {
-        --nav-h: 52px;
+        --nav-h: 92px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: calc(var(--nav-h) + 10px);
       }
 
       body {
-        background: #1a2030;
-        overflow: hidden;
+        background: #e9eef4;
+        overflow-x: hidden;
+        overflow-y: auto;
         min-width: 0;
       }
 
-      /* ----- Nav: 컴팩트, PDF 버튼만 ----- */
+      /* ----- Nav: 브랜드 + 섹션 바로가기 ----- */
       .nav {
-        padding: 0 12px;
-        gap: 8px;
+        height: var(--nav-h);
+        padding: 8px 12px 7px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: 34px 35px;
+        gap: 7px 8px;
       }
       .nav__brand {
+        grid-column: 1;
+        grid-row: 1;
         min-width: auto;
         font-size: 13px;
       }
       .nav__brand span { display: none; }
       .nav__brand strong { width: 28px; height: 28px; font-size: 11px; }
-      .nav__links { display: none; }
-      .nav__actions { margin-left: auto; gap: 6px; }
-      .btn { padding: 7px 14px; font-size: 12px; }
-
-      /* ----- Click zones는 모바일에서 숨김 (스와이프로 대체) ----- */
-      .nav-zone { display: none; }
-
-      /* ----- Deck: 가로 스와이프 (데스크톱과 동일 방향) ----- */
-      .deck {
-        flex-direction: row;
-        align-items: stretch;
+      .nav__links {
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        gap: 4px;
         overflow-x: auto;
-        overflow-y: hidden;
-        height: calc(100vh - var(--nav-h));
-        margin-top: var(--nav-h);
-        padding: 0;
-        gap: 0;
-        scroll-snap-type: x mandatory;
-        scroll-snap-stop: always;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
       }
+      .nav__links a {
+        flex: 0 0 auto;
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+      .nav__actions {
+        grid-column: 2;
+        grid-row: 1;
+        margin-left: auto;
+        gap: 6px;
+      }
+      .btn { padding: 7px 13px; font-size: 11px; }
 
-      /* ----- Page: 풀뷰포트, A4 고정 해제 ----- */
-      .page {
-        flex: 0 0 100vw;
-        width: 100vw;
-        height: calc(100vh - var(--nav-h));
-        margin: 0;
-        padding: 18px 16px;
-        zoom: 1 !important;
-        box-shadow: none;
-        border-radius: 0;
-        scroll-snap-align: center;
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
+      /* ----- Click zones는 데스크톱에서만 사용 ----- */
+      .nav-zone { display: none; }
+
+      /* ----- Deck: 모든 페이지를 세로로 이어 읽기 ----- */
+      .deck {
+        flex-direction: column;
+        align-items: center;
+        overflow: visible;
+        width: 100%;
+        height: auto;
+        min-height: calc(100vh - var(--nav-h));
+        margin-top: var(--nav-h);
+        padding: 12px 0 32px;
         gap: 12px;
+        scroll-snap-type: none;
+      }
+
+      /* ----- Page: A4 고정과 내부 스크롤 해제 ----- */
+      .page {
+        flex: none;
+        width: min(100%, 680px);
+        height: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 22px 18px;
+        grid-template-columns: minmax(0, 1fr);
+        zoom: 1 !important;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+        border-radius: 12px;
+        scroll-snap-align: none;
+        overflow: hidden;
+        gap: 18px;
+        overflow-wrap: anywhere;
+      }
+
+      .page-body,
+      .cover-layout,
+      .about-layout,
+      .profile-layout,
+      .cred-layout,
+      .project-grid,
+      .proj-cover-layout,
+      .star-layout,
+      .closing-layout {
+        height: auto;
+        min-height: 0;
+      }
+      .page-body { gap: 18px; }
+
+      .title-row {
+        display: grid;
+        align-items: start;
+        gap: 10px;
+      }
+      .title-tech {
+        align-items: flex-start;
+        padding: 10px 12px;
+        border: 1px solid var(--c-line);
+        border-radius: 8px;
+        background: var(--c-bg-soft);
+        text-align: left;
+      }
+      .title-tech__label { font-size: 9px; }
+      .title-tech__text {
+        font-size: 11px;
+        line-height: 1.55;
+        white-space: normal;
       }
 
       .page-head {
-        font-size: 9px;
-        padding-bottom: 9px;
+        font-size: 10px;
+        padding-bottom: 10px;
         gap: 8px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+      }
+      .page-head__brand {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .page-head__brand strong { flex: 0 0 auto; }
+      .page-head__brand span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .page-num {
+        flex: 0 0 auto;
+        white-space: nowrap;
       }
       .page-head__brand { gap: 6px; }
       .page-foot {
-        font-size: 9px;
-        padding-top: 8px;
-        gap: 4px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        justify-content: normal;
+        width: 100%;
+        min-width: 0;
+        font-size: 10px;
+        line-height: 1.5;
+        padding-top: 10px;
+        gap: 12px;
       }
+      .page-foot span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .page-foot span:last-child { text-align: right; }
 
       /* ----- Typography ----- */
       .hero {
-        font-size: 26px !important;
+        font-size: clamp(22px, 6.67vw, 26px) !important;
         line-height: 1.25 !important;
         letter-spacing: -0.3px !important;
       }
       .h1 {
-        font-size: 20px !important;
+        font-size: clamp(18px, 5.13vw, 20px) !important;
         line-height: 1.3 !important;
       }
       .h2 { font-size: 15px; }
@@ -1256,6 +1349,34 @@
         letter-spacing: 1px;
       }
       .kicker::before { width: 18px; height: 1.5px; }
+      .kicker,
+      .star-box__label,
+      .title-tech__label,
+      .work-list li strong { white-space: nowrap; }
+
+      .hero,
+      .h1,
+      .h2,
+      .h3,
+      .star-box__subtitle,
+      .project-card__title,
+      .proof-tile strong {
+        word-break: keep-all;
+        text-wrap: balance;
+      }
+
+      .lead,
+      .body,
+      .body-copy,
+      .proj-overview,
+      .bullets > li,
+      .project-card__type,
+      .project-card__meta-row span,
+      .proof-tile span,
+      .work-list li span {
+        word-break: keep-all;
+        text-wrap: pretty;
+      }
       .bullets { gap: 6px; }
       .bullets > li {
         font-size: 12.5px;
@@ -1282,8 +1403,8 @@
       .cover-text .lead br { display: none; }
       .cover-text .hero br { display: none; }
       .cover-photo {
-        width: 170px;
-        max-height: 230px;
+        width: 150px;
+        max-height: 210px;
         justify-self: center;
         aspect-ratio: 3 / 4;
       }
@@ -1309,7 +1430,7 @@
         padding-bottom: 8px;
       }
       .about-layout .strength-card .body {
-        font-size: 12px;
+        font-size: 13px;
         line-height: 1.65;
       }
       .cred-row {
@@ -1320,7 +1441,7 @@
       .about-layout .cred-block h2 { font-size: 14px; }
       .about-layout .timeline-item time { font-size: 10px; }
       .about-layout .timeline-item strong { font-size: 13px; }
-      .about-layout .timeline-item span { font-size: 11px; }
+      .about-layout .timeline-item span { font-size: 12px; }
       .about-layout .award-list li {
         font-size: 12px;
         padding-left: 22px;
@@ -1358,7 +1479,7 @@
       .project-card__meta { gap: 5px; padding-top: 8px; }
       .project-card__meta-row {
         grid-template-columns: 52px 1fr;
-        font-size: 11px;
+        font-size: 12px;
         gap: 8px;
       }
       .project-card__meta-row b { font-size: 9px; }
@@ -1375,14 +1496,14 @@
         line-height: 1.3 !important;
       }
       .proj-overview {
-        font-size: 12.5px;
+        font-size: 13px;
         line-height: 1.7;
         max-width: 100%;
       }
       .proj-cover-image,
       .proj-cover-image--single {
         width: 100% !important;
-        max-width: 240px !important;
+        max-width: 320px !important;
         max-height: none !important;
         aspect-ratio: 2 / 3;
         height: auto !important;
@@ -1392,7 +1513,8 @@
       .work-list { gap: 6px; }
       .work-list li {
         padding: 8px 12px;
-        font-size: 11px;
+        font-size: 12px;
+        line-height: 1.5;
         gap: 8px;
       }
       .work-list li strong {
@@ -1422,12 +1544,12 @@
         letter-spacing: 1px;
       }
       .star-box__subtitle {
-        font-size: 13px;
+        font-size: 14px;
         line-height: 1.4;
       }
       .star-box .bullets > li {
-        font-size: 11.5px;
-        line-height: 1.55;
+        font-size: 12.5px;
+        line-height: 1.65;
       }
       .star-box--a .bullets {
         grid-template-columns: 1fr;
@@ -1436,7 +1558,7 @@
       }
       .tech-strip { padding: 9px 14px; }
       .tech-strip strong { font-size: 9px; }
-      .tech-strip span { font-size: 11px; line-height: 1.5; }
+      .tech-strip span { font-size: 12px; line-height: 1.6; }
 
       /* ----- Closing page ----- */
       .closing-layout {
@@ -1461,8 +1583,23 @@
       .closing-meta__item span { font-size: 12px; }
 
       /* ----- 미세 조정 ----- */
-      .title-block { gap: 4px; }
+      .title-block { gap: 10px; }
       .body-copy { font-size: 13px; line-height: 1.65; }
+      .bullets br,
+      .proj-overview br,
+      .work-list br { display: none; }
+    }
+
+    @media screen and (max-width: 480px) {
+      .deck {
+        padding-top: 0;
+        gap: 8px;
+      }
+      .page {
+        width: 100%;
+        padding: 20px 16px;
+        border-radius: 0;
+      }
     }
   </style>
 </head>
@@ -3135,7 +3272,9 @@
     const pdfBtn = document.getElementById('pdf-btn');
     const zoneLeft = document.getElementById('zone-left');
     const zoneRight = document.getElementById('zone-right');
+    const navLinksEl = document.querySelector('.nav__links');
     const navLinks = Array.from(document.querySelectorAll('.nav__links a'));
+    let activeSectionId = null;
 
     // 페이지 번호 자동 설정 (페이지 순서 기준)
     const total = pages.length;
@@ -3159,7 +3298,7 @@
 
     // 모바일 여부
     function isMobile() {
-      return window.matchMedia('(max-width: 768px)').matches;
+      return window.matchMedia('(max-width: 768px), (max-width: 950px) and (max-height: 520px)').matches;
     }
 
     // 화면 크기에 맞춰 페이지 스케일 조정 (데스크톱만)
@@ -3181,6 +3320,25 @@
 
     // 현재 가운데 페이지 인덱스
     function currentIndex() {
+      if (isMobile()) {
+        const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0;
+        const probeY = navH + (window.innerHeight - navH) * 0.32;
+        let closest = 0, minDist = Infinity;
+
+        pages.forEach((page, i) => {
+          const rect = page.getBoundingClientRect();
+          if (rect.top <= probeY && rect.bottom >= probeY) {
+            closest = i;
+            minDist = -1;
+            return;
+          }
+          if (minDist < 0) return;
+          const dist = Math.min(Math.abs(rect.top - probeY), Math.abs(rect.bottom - probeY));
+          if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        return closest;
+      }
+
       const deckRect = deck.getBoundingClientRect();
       const containerCenter = deckRect.left + deckRect.width / 2;
       let closest = 0, minDist = Infinity;
@@ -3195,14 +3353,22 @@
 
     function goTo(idx) {
       idx = Math.max(0, Math.min(pages.length - 1, idx));
-      pages[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      pages[idx].scrollIntoView({
+        behavior: 'smooth',
+        inline: isMobile() ? 'nearest' : 'center',
+        block: isMobile() ? 'start' : 'nearest'
+      });
     }
 
     function jumpToHash(hash) {
       if (!hash) return false;
       const target = document.querySelector(hash);
       if (target) {
-        target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        target.scrollIntoView({
+          behavior: 'smooth',
+          inline: isMobile() ? 'nearest' : 'center',
+          block: isMobile() ? 'start' : 'nearest'
+        });
         return true;
       }
       return false;
@@ -3212,9 +3378,20 @@
     function updateState() {
       const idx = currentIndex();
       const sectionId = pageSections[idx];
+      let activeLink = null;
       navLinks.forEach(a => {
-        a.classList.toggle('is-active', a.getAttribute('href') === '#' + sectionId);
+        const isActive = a.getAttribute('href') === '#' + sectionId;
+        a.classList.toggle('is-active', isActive);
+        if (isActive) activeLink = a;
       });
+      if (isMobile() && sectionId !== activeSectionId && activeLink && navLinksEl) {
+        const linkRect = activeLink.getBoundingClientRect();
+        const navRect = navLinksEl.getBoundingClientRect();
+        const targetLeft = navLinksEl.scrollLeft + linkRect.left - navRect.left
+          - (navRect.width - linkRect.width) / 2;
+        navLinksEl.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      }
+      activeSectionId = sectionId;
       if (sectionId) history.replaceState(null, '', '#' + sectionId);
       // zone 비활성 처리 (첫/마지막 페이지에서)
       if (zoneLeft) zoneLeft.disabled = (idx === 0);
@@ -3231,6 +3408,10 @@
     deck.addEventListener('scroll', () => {
       window.requestAnimationFrame(updateState);
     });
+
+    window.addEventListener('scroll', () => {
+      if (isMobile()) window.requestAnimationFrame(updateState);
+    }, { passive: true });
 
     navLinks.forEach(a => {
       a.addEventListener('click', e => {
